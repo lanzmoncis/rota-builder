@@ -1,16 +1,26 @@
 "use client";
 
+import { useState } from "react";
+
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+import AddShiftModal from "@/components/add-shift-modal";
+
 const DashboardPage = () => {
-  function handleDateClick() {
-    alert("DATE HAS BEEN CLICK");
-  }
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   return (
-    <div>
+    <>
+      <AddShiftModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onSave={() => {}}
+        loading={loading}
+      />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -19,10 +29,10 @@ const DashboardPage = () => {
           center: "title",
           right: "dayGridMonth,timeGridWeek",
         }}
-        dateClick={handleDateClick}
+        dateClick={() => setOpen(true)}
         editable={true}
       />
-    </div>
+    </>
   );
 };
 
