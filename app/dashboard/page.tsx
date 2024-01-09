@@ -13,6 +13,8 @@ const DashboardPage = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log("I'm here!!!");
+
   return (
     <>
       <AddShiftModal
