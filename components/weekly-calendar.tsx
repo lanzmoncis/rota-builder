@@ -14,6 +14,8 @@ import {
   subWeeks,
 } from "date-fns";
 
+import { cn } from "@/lib/utils";
+
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [currentWeek, setCurrentWeek] = useState<number>(getWeek(currentMonth));
@@ -38,22 +40,47 @@ const Calendar = () => {
     }
   };
 
+  const goToToday = () => {
+    setCurrentMonth(new Date());
+    setCurrentWeek(getWeek(new Date()));
+  };
+
   const renderHeader = () => {
+    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+
     const dateFormat = "EEE. MMM. dd";
     const days = [];
-    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+
     for (let i = 0; i < 7; i++) {
-      days.push(<div key={i}>{format(addDays(startDate, i), dateFormat)}</div>);
+      const currentDate = addDays(startDate, i);
+      days.push(
+        <div
+          key={i}
+          className={cn(
+            "p-5 text-sm",
+            isSameDay(currentDate, new Date()) ? "bg-sky-500 text-slate-50" : ""
+          )}
+        >
+          {format(currentDate, dateFormat)}
+        </div>
+      );
     }
 
     return (
-      <div className="grid grid-cols-7 gap-5 text-sm justify-items-center">
-        {days}
-      </div>
+      <div className="grid grid-cols-7 gap-5 justify-items-center">{days}</div>
     );
   };
 
-  return <div className="calendar">{renderHeader()}</div>;
+  return (
+    <div className="calendar">
+      <div className="flex gap-5 mb-10 text-sm">
+        <button onClick={() => changeWeekHandle("prev")}>Previous Week</button>
+        <button onClick={goToToday}>Today</button>
+        <button onClick={() => changeWeekHandle("next")}>Next Week</button>
+      </div>
+      {renderHeader()}
+    </div>
+  );
 };
 
 export default Calendar;
