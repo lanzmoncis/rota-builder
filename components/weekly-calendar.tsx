@@ -3,12 +3,9 @@
 import { useState } from "react";
 import {
   format,
-  subMonths,
-  addMonths,
   startOfWeek,
   addDays,
   isSameDay,
-  lastDayOfWeek,
   getWeek,
   addWeeks,
   subWeeks,
@@ -16,18 +13,18 @@ import {
 
 import { cn } from "@/lib/utils";
 
+import AddShiftModal from "@/components/add-shift-modal";
+
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [currentWeek, setCurrentWeek] = useState<number>(getWeek(currentMonth));
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const changeMonthHandle = (btnType: "prev" | "next") => {
-    if (btnType === "prev") {
-      setCurrentMonth(subMonths(currentMonth, 1));
-    }
-    if (btnType === "next") {
-      setCurrentMonth(addMonths(currentMonth, 1));
-    }
-  };
+  const employees = [
+    { name: "Lance", id: 123 },
+    { name: "Mark", id: 456 },
+  ];
 
   const changeWeekHandle = (btnType: "prev" | "next") => {
     if (btnType === "prev") {
@@ -57,7 +54,7 @@ const Calendar = () => {
         <div
           key={i}
           className={cn(
-            "p-5 text-sm",
+            "text-sm",
             isSameDay(currentDate, new Date()) ? "bg-sky-500 text-slate-50" : ""
           )}
         >
@@ -67,19 +64,49 @@ const Calendar = () => {
     }
 
     return (
-      <div className="grid grid-cols-7 gap-5 justify-items-center">{days}</div>
+      <div className="grid grid-cols-7 justify-items-center items-center h-20">
+        {days}
+      </div>
     );
   };
 
   return (
-    <div className="calendar">
-      <div className="flex gap-5 mb-10 text-sm">
-        <button onClick={() => changeWeekHandle("prev")}>Previous Week</button>
-        <button onClick={goToToday}>Today</button>
-        <button onClick={() => changeWeekHandle("next")}>Next Week</button>
+    <>
+      <AddShiftModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onSave={() => {}}
+        loading={loading}
+      />
+      <div className="calendar">
+        <div className="flex gap-5 mb-10 text-sm">
+          <button onClick={() => changeWeekHandle("prev")}>
+            Previous Week
+          </button>
+          <button onClick={goToToday}>Today</button>
+          <button onClick={() => changeWeekHandle("next")}>Next Week</button>
+        </div>
+        <div className="mx-14">
+          {renderHeader()}
+          <div className="grid grid-cols-7">
+            {employees.map((employee) => (
+              <>
+                {[...Array(7)].map((_, index) => (
+                  <div
+                    key={employee.id}
+                    className={cn(
+                      "border border-gray-700 h-20",
+                      index === 6 ? "" : "border-r-0"
+                    )}
+                    onClick={() => setOpen(true)}
+                  ></div>
+                ))}
+              </>
+            ))}
+          </div>
+        </div>
       </div>
-      {renderHeader()}
-    </div>
+    </>
   );
 };
 
