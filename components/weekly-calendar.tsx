@@ -54,8 +54,8 @@ const Calendar = () => {
         <div
           key={i}
           className={cn(
-            "text-sm",
-            isSameDay(currentDate, new Date()) ? "bg-sky-500 text-slate-50" : ""
+            "text-sm w-full h-full flex items-center justify-center",
+            isSameDay(currentDate, new Date()) ? "bg-sky-200" : ""
           )}
         >
           {format(currentDate, dateFormat)}
@@ -78,7 +78,7 @@ const Calendar = () => {
         onSave={() => {}}
         loading={loading}
       />
-      <div className="calendar">
+      <div className="p-8">
         <div className="flex gap-5 mb-10 text-sm">
           <button onClick={() => changeWeekHandle("prev")}>
             Previous Week
@@ -86,18 +86,15 @@ const Calendar = () => {
           <button onClick={goToToday}>Today</button>
           <button onClick={() => changeWeekHandle("next")}>Next Week</button>
         </div>
-        <div className="mx-14">
-          {renderHeader()}
+        {renderHeader()}
+        <div className="border-slate-400 border-t border-l">
           <div className="grid grid-cols-7">
             {employees.map((employee) => (
               <>
-                {[...Array(7)].map((_, index) => (
+                {[...Array(7)].map((_) => (
                   <div
                     key={employee.id}
-                    className={cn(
-                      "border border-gray-700 h-20",
-                      index === 6 ? "" : "border-r-0"
-                    )}
+                    className="h-20 border-r border-b border-slate-400"
                     onClick={() => setOpen(true)}
                   ></div>
                 ))}
