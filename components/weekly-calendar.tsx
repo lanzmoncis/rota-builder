@@ -16,14 +16,15 @@ import { cn } from "@/lib/utils";
 import AddShiftModal from "@/components/add-shift-modal";
 
 const Calendar = () => {
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
-  const [currentWeek, setCurrentWeek] = useState<number>(getWeek(currentMonth));
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const employees = [
-    { name: "Lance", id: 123 },
-    { name: "Mark", id: 456 },
+    { name: "Lance", id: 1234 },
+    { name: "Mark", id: 5678 },
+    { name: "Jords", id: 9101 },
   ];
 
   const changeWeekHandle = (btnType: "prev" | "next") => {
@@ -55,7 +56,7 @@ const Calendar = () => {
           key={i}
           className={cn(
             "text-sm w-full h-full flex items-center justify-center",
-            isSameDay(currentDate, new Date()) ? "bg-sky-200" : ""
+            isSameDay(currentDate, new Date()) ? "bg-green-200" : ""
           )}
         >
           {format(currentDate, dateFormat)}
@@ -64,7 +65,8 @@ const Calendar = () => {
     }
 
     return (
-      <div className="grid grid-cols-7 justify-items-center items-center h-20">
+      <div className="grid grid-cols-8 justify-items-center items-center h-20">
+        <div className="text-white">hidden</div>
         {days}
       </div>
     );
@@ -88,19 +90,22 @@ const Calendar = () => {
         </div>
         {renderHeader()}
         <div className="border-slate-400 border-t border-l">
-          <div className="grid grid-cols-7">
-            {employees.map((employee) => (
-              <>
-                {[...Array(7)].map((_) => (
+          {employees.map((employee) => (
+            <>
+              <div key={employee.id} className="grid grid-cols-8">
+                <div className="h-20 flex justify-center items-center border-r border-b border-slate-400">
+                  {employee.name}
+                </div>
+                {[...Array(7)].map((_, index) => (
                   <div
-                    key={employee.id}
-                    className="h-20 border-r border-b border-slate-400"
+                    key={index}
+                    className="h-20 border-r border-b border-slate-400 flex justify-center items-center"
                     onClick={() => setOpen(true)}
                   ></div>
                 ))}
-              </>
-            ))}
-          </div>
+              </div>
+            </>
+          ))}
         </div>
       </div>
     </>
