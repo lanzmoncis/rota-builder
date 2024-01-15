@@ -25,6 +25,7 @@ const Calendar = () => {
     { name: "Lance", id: 1234 },
     { name: "Mark", id: 5678 },
     { name: "Jords", id: 9101 },
+    { name: "Wako", id: 2345 },
   ];
 
   const changeWeekHandle = (btnType: "prev" | "next") => {
@@ -56,7 +57,7 @@ const Calendar = () => {
           key={i}
           className={cn(
             "text-sm w-full h-full flex items-center justify-center",
-            isSameDay(currentDate, new Date()) ? "bg-green-200" : ""
+            isSameDay(currentDate, new Date()) ? "bg-green-100" : ""
           )}
         >
           {format(currentDate, dateFormat)}
@@ -80,16 +81,36 @@ const Calendar = () => {
         onSave={() => {}}
         loading={loading}
       />
-      <div className="p-8">
-        <div className="flex gap-5 mb-10 text-sm">
-          <button onClick={() => changeWeekHandle("prev")}>
-            Previous Week
-          </button>
-          <button onClick={goToToday}>Today</button>
-          <button onClick={() => changeWeekHandle("next")}>Next Week</button>
+      <div className="p-8 font-medium text-gray-700">
+        <div className="flex justify-between">
+          <div className="text-xl text-black">
+            {format(new Date(), "MMMM d yyyy")}
+          </div>
+          <div className="flex gap-2 mb-10 text-sm bg-white py-1 px-2 rounded-sm">
+            {/* Change design? */}
+            <button
+              onClick={goToToday}
+              // should be dynamic and corresponds with the today time
+              className="bg-green-400 py-1 px-2 rounded-sm"
+            >
+              Today
+            </button>
+            <button
+              onClick={() => changeWeekHandle("prev")}
+              className="hover:bg-green-400 py-1 px-2 rounded-sm duration-200"
+            >
+              Previous week
+            </button>
+            <button
+              onClick={() => changeWeekHandle("next")}
+              className="hover:bg-green-400 py-1 px-2 rounded-sm duration-200"
+            >
+              Next week
+            </button>
+          </div>
         </div>
         {renderHeader()}
-        <div className="border-slate-400 border-t border-l">
+        <div className="border-slate-400 border-t border-l bg-white">
           {employees.map((employee) => (
             <>
               <div key={employee.id} className="grid grid-cols-8">
