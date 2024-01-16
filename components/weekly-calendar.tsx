@@ -67,7 +67,7 @@ const Calendar = () => {
 
     return (
       <div className="grid grid-cols-8 justify-items-center items-center h-20">
-        <div className="text-white">hidden</div>
+        <div className="text-gray-50">hidden</div>
         {days}
       </div>
     );
@@ -111,10 +111,15 @@ const Calendar = () => {
         </div>
         {renderHeader()}
         <div className="border-slate-400 border-t border-l bg-white">
-          {employees.map((employee) => (
+          {employees.map((employee, index) => (
             <>
               <div key={employee.id} className="grid grid-cols-8">
-                <div className="h-20 flex justify-center items-center border-r border-b border-slate-400">
+                <div
+                  className={cn(
+                    "h-20 flex justify-center items-center border-r border-b border-slate-400",
+                    index % 2 === 0 ? "bg-green-300" : "bg-green-200"
+                  )}
+                >
                   {employee.name}
                 </div>
                 {[...Array(7)].map((_, index) => (

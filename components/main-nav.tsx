@@ -40,7 +40,10 @@ const MainNav = () => {
                   isActive ? "bg-gray-100 text-gray-800" : ""
                 )}
               >
-                <Icon className="w-5 h-5" color="#15803d" />
+                <Icon
+                  className="w-5 h-5"
+                  color={isActive ? "#15803d" : "#64748b"}
+                />
                 <span>{route.name}</span>
               </Link>
             </li>
