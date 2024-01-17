@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   format,
   startOfWeek,
@@ -91,19 +91,19 @@ const Calendar = () => {
             <button
               onClick={goToToday}
               // should be dynamic and corresponds with the today time
-              className="bg-green-400 py-1 px-2 rounded-sm"
+              className="bg-green-400 hover:bg-green-500 duration-200 py-1 px-2 rounded-sm"
             >
               Today
             </button>
             <button
               onClick={() => changeWeekHandle("prev")}
-              className="hover:bg-green-400 py-1 px-2 rounded-sm duration-200"
+              className="bg-green-400 hover:bg-green-500 py-1 px-2 rounded-sm duration-200"
             >
               Previous week
             </button>
             <button
               onClick={() => changeWeekHandle("next")}
-              className="hover:bg-green-400 py-1 px-2 rounded-sm duration-200"
+              className="bg-green-400 hover:bg-green-500 py-1 px-2 rounded-sm duration-200"
             >
               Next week
             </button>
@@ -112,8 +112,8 @@ const Calendar = () => {
         {renderHeader()}
         <div className="border-slate-400 border-t border-l bg-white">
           {employees.map((employee, index) => (
-            <>
-              <div key={employee.id} className="grid grid-cols-8">
+            <React.Fragment key={employee.id}>
+              <div className="grid grid-cols-8">
                 <div
                   className={cn(
                     "h-20 flex justify-center items-center border-r border-b border-slate-400",
@@ -130,7 +130,7 @@ const Calendar = () => {
                   ></div>
                 ))}
               </div>
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
