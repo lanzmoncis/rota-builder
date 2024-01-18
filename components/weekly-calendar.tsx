@@ -14,12 +14,19 @@ import {
 import { cn } from "@/lib/utils";
 
 import AddShiftModal from "@/components/add-shift-modal";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [inputDisabled, setInputDisabled] = useState(true);
 
   const employees = [
     { name: "Lance", id: 1234 },
@@ -123,11 +130,18 @@ const Calendar = () => {
                   {employee.name}
                 </div>
                 {[...Array(7)].map((_, index) => (
-                  <div
-                    key={index}
-                    className="h-20 border-r border-b border-slate-400 flex justify-center items-center"
-                    onClick={() => setOpen(true)}
-                  ></div>
+                  <ContextMenu key={index}>
+                    <ContextMenuTrigger>
+                      <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center"></div>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent>
+                      <ContextMenuItem onClick={() => setOpen(true)}>
+                        Add
+                      </ContextMenuItem>
+                      <ContextMenuItem>Edit</ContextMenuItem>
+                      <ContextMenuItem>Copy</ContextMenuItem>
+                    </ContextMenuContent>
+                  </ContextMenu>
                 ))}
               </div>
             </React.Fragment>
