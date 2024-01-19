@@ -2,14 +2,19 @@
 
 import { useEffect, useState } from "react";
 
+import { format } from "date-fns";
+
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 interface AddShiftModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: () => void;
   loading: boolean;
+  date: Date | null;
+  employee: string | null;
 }
 
 const AddShiftModal: React.FC<AddShiftModalProps> = ({
@@ -17,6 +22,8 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   onClose,
   onSave,
   loading,
+  date,
+  employee,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -31,10 +38,17 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   return (
     <Modal
       title="Add Shift"
-      description="make shifts for your employees"
+      description="Add shift for the employee"
       isOpen={isOpen}
       onClose={onClose}
     >
+      <Separator />
+      <div className="py-4">
+        <p className="mb-4 text-sm">
+          {employee && `${employee} `}
+          <span>{date && `${format(date, "EEE. MMM. dd")}`}</span>
+        </p>
+      </div>
       <div className="items-center justify-end w-full pt-6 space-x-2">
         <Button disabled={loading} variant="outline" onClick={onClose}>
           Cancel
