@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
 
 interface AddShiftModalProps {
   isOpen: boolean;
@@ -49,6 +50,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
           <span>{date && `${format(date, "EEE. MMM. dd")}`}</span>
         </p>
       </div>
+      <Input />
       <div className="items-center justify-end w-full pt-6 space-x-2">
         <Button disabled={loading} variant="outline" onClick={onClose}>
           Cancel
