@@ -47,7 +47,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
       <div className="py-4">
         <p className="mb-4 text-sm">
           {employee && `${employee} `}
-          <span>{date && `${format(date, "EEE. MMM. dd")}`}</span>
+          <span>{date && `${format(date, "EEE. MMM. dd, yyyy")}`}</span>
         </p>
       </div>
       <Input />

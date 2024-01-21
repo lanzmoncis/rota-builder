@@ -11,10 +11,50 @@ const WeeklyCalendar = () => {
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
 
   const employees = [
-    { name: "Lance", id: 1234 },
-    { name: "Mark", id: 5678 },
-    { name: "Jords", id: 9101 },
-    { name: "Wako", id: 2345 },
+    {
+      name: "Lance",
+      id: 1234,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
+    {
+      name: "Mark",
+      id: 5678,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
+    {
+      name: "Jords",
+      id: 9101,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
+    {
+      name: "Wako",
+      id: 2345,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
   ];
 
   const changeWeekHandle = (btnType: "prev" | "next") => {

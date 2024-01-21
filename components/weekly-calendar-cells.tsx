@@ -12,10 +12,17 @@ import {
 } from "@/components/ui/context-menu";
 import AddShiftModal from "@/components/add-shift-modal";
 
-type EmployeeProps = {
+interface Shift {
+  date: string; // ISO string representation of the date
+  department: string;
+  shiftTime: string;
+}
+
+interface EmployeeProps {
   name: string;
   id: number;
-};
+  shifts: Shift[];
+}
 
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
@@ -32,7 +39,7 @@ const WeeklyCalendarCells = ({
   const [selectedEmployee, setSelectedEmployee] = useState<string | null>(null);
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
-  const dateFormat = "EEE. MMM. dd";
+  const dateFormat = "EEE. MMM. dd, yyyy";
   const shiftDates: string[] = [];
 
   for (let i = 0; i < 7; i++) {
@@ -65,7 +72,17 @@ const WeeklyCalendarCells = ({
               <React.Fragment key={i}>
                 <ContextMenu>
                   <ContextMenuTrigger>
-                    <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center"></div>
+                    <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center">
+                      {/* Display shift information if it exists. Still needs fixing */}
+                      {employee.shifts
+                        .filter((shift) => shift.date === date)
+                        .map((shift) => (
+                          <div key={shift.date}>
+                            <div>{shift.department}</div>
+                            <div>{shift.shiftTime}</div>
+                          </div>
+                        ))}
+                    </div>
                   </ContextMenuTrigger>
                   <ContextMenuContent>
                     <ContextMenuItem
