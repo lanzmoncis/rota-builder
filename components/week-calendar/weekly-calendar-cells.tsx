@@ -10,7 +10,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import AddShiftModal from "@/components/add-shift-modal";
+import AddShiftModal from "@/components/modals/add-shift-modal";
 
 interface Shift {
   date: string; // ISO string representation of the date
@@ -62,7 +62,7 @@ const WeeklyCalendarCells = ({
           <div className="grid grid-cols-8" key={employee.id}>
             <div
               className={cn(
-                "h-20 flex justify-center items-center border-r border-b border-slate-400",
+                "h-20 flex justify-center items-center border-r border-b border-slate-400 text-sm",
                 index % 2 === 0 ? "bg-green-300" : "bg-green-200"
               )}
             >
@@ -73,11 +73,19 @@ const WeeklyCalendarCells = ({
                 <ContextMenu>
                   <ContextMenuTrigger>
                     <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center">
-                      {/* Display shift information if it exists. Still needs fixing */}
                       {employee.shifts
-                        .filter((shift) => shift.date === date)
+                        .filter((shift) => {
+                          const formattedShiftDate = format(
+                            new Date(shift.date),
+                            dateFormat
+                          );
+                          return formattedShiftDate === date;
+                        })
                         .map((shift) => (
-                          <div key={shift.date}>
+                          <div
+                            key={shift.date}
+                            className="text-center text-sm font-normal"
+                          >
                             <div>{shift.department}</div>
                             <div>{shift.shiftTime}</div>
                           </div>

@@ -1,5 +1,5 @@
-import MainNav from "@/components/main-nav";
-import Logo from "./logo";
+import MainNav from "@/components/navigation/main-nav";
+import Logo from "../ui/logo";
 
 const Sidebar = () => {
   return (

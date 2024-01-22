@@ -1,4 +1,4 @@
-import WeeklyCalendar from "@/components/weekly-calendar";
+import WeeklyCalendar from "@/components/week-calendar/weekly-calendar";
 
 const DashboardPage = () => {
   return (

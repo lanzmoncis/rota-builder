@@ -18,7 +18,7 @@ const WeeklyCalendarHeader = ({ currentMonth }: WeeklyCalendarHeaderProps) => {
         key={i}
         className={cn(
           "text-sm w-full h-full flex items-center justify-center",
-          isSameDay(currentDate, new Date()) ? "bg-green-100" : ""
+          isSameDay(currentDate, new Date()) && "bg-green-100"
         )}
       >
         {format(currentDate, dateFormat)}
@@ -28,7 +28,7 @@ const WeeklyCalendarHeader = ({ currentMonth }: WeeklyCalendarHeaderProps) => {
 
   return (
     <div className="grid grid-cols-8 justify-items-center items-center h-20">
-      <div className="text-gray-50">hidden</div>
+      <div className="text-gray-50"></div>
       {headerDates}
     </div>
   );

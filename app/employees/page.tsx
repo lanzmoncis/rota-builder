@@ -1,11 +1,5 @@
-import WeeklyCalendar from "@/components/weekly-calendar-v1";
-
 const EmployeesPage = () => {
-  return (
-    <div>
-      <WeeklyCalendar />
-    </div>
-  );
+  return <div>Employee</div>;
 };
 
 export default EmployeesPage;

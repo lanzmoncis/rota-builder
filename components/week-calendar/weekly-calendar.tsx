@@ -3,18 +3,63 @@
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
-import WeeklyCalendarHeader from "@/components/weekly-calendar-header";
-import WeeklyCalendarCells from "@/components/weekly-calendar-cells";
+import WeeklyCalendarHeader from "@/components/week-calendar/weekly-calendar-header";
+import WeeklyCalendarCells from "@/components/week-calendar/weekly-calendar-cells";
 
 const WeeklyCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
 
   const employees = [
-    { name: "Lance", id: 1234 },
-    { name: "Mark", id: 5678 },
-    { name: "Jords", id: 9101 },
-    { name: "Wako", id: 2345 },
+    {
+      name: "Lance",
+      id: 1234,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
+    {
+      name: "Mark",
+      id: 5678,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
+    {
+      name: "Jords",
+      id: 9101,
+      shifts: [
+        {
+          date: "2024-01-15T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+        {
+          date: "2024-01-18T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
+    {
+      name: "Wako",
+      id: 2345,
+      shifts: [
+        {
+          date: "2024-01-16T00:00:00.000Z",
+          department: "Kitchen",
+          shiftTime: "9am-5pm",
+        },
+      ],
+    },
   ];
 
   const changeWeekHandle = (btnType: "prev" | "next") => {
@@ -40,10 +85,8 @@ const WeeklyCalendar = () => {
           {format(new Date(), "MMMM d yyyy")}
         </div>
         <div className="flex gap-2 mb-10 text-sm bg-white py-1 px-2 rounded-sm">
-          {/* Change design? */}
           <button
             onClick={goToToday}
-            // should be dynamic and corresponds with the today time
             className="bg-green-400 hover:bg-green-500 duration-200 py-1 px-2 rounded-sm"
           >
             Today
