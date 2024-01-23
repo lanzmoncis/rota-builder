@@ -39,18 +39,29 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   return (
     <Modal
       title="Add Shift"
-      description="Add shift for the employee"
+      description="Create shift to employee"
       isOpen={isOpen}
       onClose={onClose}
     >
       <Separator />
-      <div className="py-4">
-        <p className="mb-4 text-sm">
-          {employee && `${employee} `}
-          <span>{date && `${format(date, "EEE. MMM. dd, yyyy")}`}</span>
+      <div className="py-4 mb-1">
+        <p className="text-sm">
+          {/* {employee && `${employee}, `} */}
+          <span>{date && `${format(date, "EEEE MMMM dd, yyyy")}`}</span>
         </p>
       </div>
-      <Input />
+      <div className="flex gap-4">
+        <Input
+          type="text"
+          className="border-0 border-b-2 focus-visible:ring-0 focus:border-green-500 rounded-none"
+          placeholder="Add department"
+        />
+        <Input
+          type="text"
+          className="border-0 border-b-2 focus-visible:ring-0 focus:border-green-500 rounded-none"
+          placeholder="Add shift time"
+        />
+      </div>
       <div className="items-center justify-end w-full pt-6 space-x-2">
         <Button disabled={loading} variant="outline" onClick={onClose}>
           Cancel

@@ -82,10 +82,7 @@ const WeeklyCalendarCells = ({
                           return formattedShiftDate === date;
                         })
                         .map((shift) => (
-                          <div
-                            key={shift.date}
-                            className="text-center text-sm font-normal"
-                          >
+                          <div key={shift.date} className="text-center text-sm">
                             <div>{shift.department}</div>
                             <div>{shift.shiftTime}</div>
                           </div>
