@@ -19,13 +19,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+interface Shift {
+  date: string;
+  department: string;
+  shiftTime: string;
+}
+
+interface EmployeeProps {
+  name: string;
+  id: number;
+  shifts: Shift[];
+}
+
 interface AddShiftModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: () => void;
   loading: boolean;
   date: Date | null;
   employee: string | null;
+  employees: EmployeeProps[];
 }
 
 const formSchema = z.object({
@@ -40,10 +52,10 @@ const formSchema = z.object({
 const AddShiftModal: React.FC<AddShiftModalProps> = ({
   isOpen,
   onClose,
-  onSave,
   loading,
   date,
   employee,
+  employees,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -63,7 +75,21 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
     return null;
   }
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {};
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    const employeeIndex = employees.findIndex((emp) => emp.name === employee);
+
+    if (employeeIndex !== -1) {
+      const newShift = {
+        date: date?.toISOString() || "",
+        department: values.department,
+        shiftTime: values.shiftTime,
+      };
+
+      employees[employeeIndex].shifts.push(newShift);
+    }
+
+    onClose();
+  };
 
   return (
     <Modal
@@ -123,7 +149,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
             <Button disabled={loading} variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button disabled={loading} onClick={onSave}>
+            <Button disabled={loading} type="submit">
               Save
             </Button>
           </div>

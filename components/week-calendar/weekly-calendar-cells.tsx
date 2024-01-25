@@ -13,7 +13,7 @@ import {
 import AddShiftModal from "@/components/modals/add-shift-modal";
 
 interface Shift {
-  date: string; // ISO string representation of the date
+  date: string;
   department: string;
   shiftTime: string;
 }
@@ -52,10 +52,10 @@ const WeeklyCalendarCells = ({
       <AddShiftModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onSave={() => {}}
         loading={loading}
         date={selectedDate}
         employee={selectedEmployee}
+        employees={employees}
       />
       <div className="border-slate-400 border-t border-l bg-white">
         {employees.map((employee, index) => (
