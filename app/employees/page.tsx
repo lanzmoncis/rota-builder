@@ -1,5 +1,11 @@
+import EmployeesClient from "./components/client";
+
 const EmployeesPage = () => {
-  return <div>Employee</div>;
+  return (
+    <div>
+      <EmployeesClient />
+    </div>
+  );
 };
 
 export default EmployeesPage;

@@ -29,10 +29,12 @@ interface WeeklyCalendarCellProps {
   employees: EmployeeProps[];
 }
 
-const WeeklyCalendarCells = ({
+// Still needs fixing
+
+const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   currentMonth,
   employees,
-}: WeeklyCalendarCellProps) => {
+}) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

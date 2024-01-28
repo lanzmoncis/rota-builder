@@ -55,7 +55,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   loading,
   date,
   employee,
-  employees,
+  // employees,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -76,19 +76,16 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   }
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    const employeeIndex = employees.findIndex((emp) => emp.name === employee);
-
-    if (employeeIndex !== -1) {
-      const newShift = {
-        date: date?.toISOString() || "",
-        department: values.department,
-        shiftTime: values.shiftTime,
-      };
-
-      employees[employeeIndex].shifts.push(newShift);
-    }
-
-    onClose();
+    // const employeeIndex = employees.findIndex((emp) => emp.name === employee);
+    // if (employeeIndex !== -1) {
+    //   const newShift = {
+    //     date: date?.toISOString() || "",
+    //     department: values.department,
+    //     shiftTime: values.shiftTime,
+    //   };
+    //   employees[employeeIndex].shifts.push(newShift);
+    // }
+    // onClose();
   };
 
   return (

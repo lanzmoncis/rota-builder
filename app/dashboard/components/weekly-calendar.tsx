@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
-import WeeklyCalendarHeader from "@/components/week-calendar/weekly-calendar-header";
-import WeeklyCalendarCells from "@/components/week-calendar/weekly-calendar-cells";
+import WeeklyCalendarHeader from "./weekly-calendar-header";
+import WeeklyCalendarCells from "./weekly-calendar-cells";
 
 const WeeklyCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -106,6 +106,7 @@ const WeeklyCalendar = () => {
         </div>
       </div>
       <WeeklyCalendarHeader currentMonth={currentMonth} />
+      {/* Should pass test employee data */}
       <WeeklyCalendarCells currentMonth={currentMonth} employees={employees} />
     </div>
   );
