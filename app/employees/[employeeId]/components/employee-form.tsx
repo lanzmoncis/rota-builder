@@ -27,7 +27,6 @@ const formSchema = z.object({
 type EmployeeFormValue = z.infer<typeof formSchema>;
 
 const EmployeeForm: React.FC = () => {
-  console.log("IM HERE!");
   // form needs fixing
   const form = useForm<EmployeeFormValue>({
     resolver: zodResolver(formSchema),
