@@ -1,5 +1,11 @@
+import EmployeeForm from "./components/employee-form";
+
 const EmployeePage = () => {
-  return <div>Employee Page</div>;
+  return (
+    <div>
+      <EmployeeForm />
+    </div>
+  );
 };
 
 export default EmployeePage;
