@@ -15,6 +15,10 @@ datasource db {
 model Employee {
   id          String    @id @default(cuid())
   name        String
+  jobTitle    String
+  dateStarted DateTime
+  payrollId   String
+  hourlyRate  String
   shifts      Shift[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
