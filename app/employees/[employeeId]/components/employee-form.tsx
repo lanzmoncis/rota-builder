@@ -3,9 +3,12 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { formSchema } from "@/lib/schema";
+import { addEmployee } from "@/lib/actions";
 
 import {
   Form,
@@ -24,23 +27,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "label must be at least 1 character.",
-  }),
-  jobTitle: z.string().min(1, {
-    message: "Job title must be at least 1 character",
-  }),
-  dateStarted: z.date({
-    required_error: "Please select a date and time",
-    invalid_type_error: "That's not a date!",
-  }),
-  payrollId: z.string().min(4, {
-    message: "Payroll ID must be at least 4 characters",
-  }),
-  hourlyRate: z.string(),
-});
-
 type EmployeeFormValue = z.infer<typeof formSchema>;
 
 const EmployeeForm: React.FC = () => {
@@ -55,8 +41,20 @@ const EmployeeForm: React.FC = () => {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const result = await addEmployee(values);
+
+    if (!result) {
+      console.log("Something went wrong");
+      return;
+    }
+
+    if (result.error) {
+      console.log(result.error);
+      return;
+    }
+
+    console.log(result);
   };
 
   return (
