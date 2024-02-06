@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { formSchema } from "@/lib/schema";
@@ -26,10 +27,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
+import { useToast } from "@/components/ui/use-toast";
 
 type EmployeeFormValue = z.infer<typeof formSchema>;
 
 const EmployeeForm: React.FC = () => {
+  const { toast } = useToast();
+  const router = useRouter();
+
   const form = useForm<EmployeeFormValue>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,6 +60,12 @@ const EmployeeForm: React.FC = () => {
     }
 
     console.log(result);
+    router.refresh();
+    router.push("/employees");
+    toast({
+      title: "Scheduled: Catch up",
+      description: "Friday, February 10, 2023 at 5:57 PM",
+    });
   };
 
   return (
