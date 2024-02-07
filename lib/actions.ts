@@ -2,17 +2,40 @@
 
 import { z } from "zod";
 import { formSchema } from "./schema";
+import { db } from "./db";
+import { revalidatePath } from "next/cache";
 
 type Inputs = z.infer<typeof formSchema>;
 
-export async function addEmployee(data: Inputs) {
-  const employeeDataValidation = formSchema.safeParse(data);
+export async function addEmployee(values: Inputs) {
+  const employeeDataValidation = formSchema.safeParse(values);
 
-  if (employeeDataValidation.success) {
-    return { success: true, data: employeeDataValidation.data };
+  if (!employeeDataValidation.success) {
+    return {
+      errors: employeeDataValidation.error.flatten().fieldErrors,
+      message: "Failed to add employee.",
+    };
   }
 
-  if (employeeDataValidation.error) {
-    return { success: false, error: employeeDataValidation.error.format() };
+  const { name, jobTitle, dateStarted, payrollId, hourlyRate } =
+    employeeDataValidation.data;
+
+  try {
+    const result = await db.employee.create({
+      data: {
+        name,
+        jobTitle,
+        dateStarted,
+        payrollId,
+        hourlyRate,
+      },
+    });
+
+    revalidatePath("/employees");
+    return result;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create Post.",
+    };
   }
 }

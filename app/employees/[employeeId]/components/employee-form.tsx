@@ -54,11 +54,6 @@ const EmployeeForm: React.FC = () => {
       return;
     }
 
-    if (result.error) {
-      console.log(result.error);
-      return;
-    }
-
     console.log(result);
     router.refresh();
     router.push("/employees");
