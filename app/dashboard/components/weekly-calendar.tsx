@@ -79,7 +79,7 @@ const WeeklyCalendar = () => {
   };
 
   return (
-    <div className="p-8 font-medium text-gray-700">
+    <div className="p-8 text-gray-700">
       <div className="flex justify-between">
         <div className="text-xl text-black">
           {format(new Date(), "MMMM d yyyy")}

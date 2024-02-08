@@ -1,15 +1,23 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
-const EmployeesClient = () => {
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/data-table";
+
+import { EmployeeColumn, columns } from "./columns";
+
+interface EmployeeClientProps {
+  data: EmployeeColumn[];
+}
+
+export const EmployeesClient: React.FC<EmployeeClientProps> = ({ data }) => {
   const router = useRouter();
-  const params = useParams();
+
   return (
-    <div className="p-8 font-medium">
+    <>
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl">Employees</h2>
@@ -22,8 +30,8 @@ const EmployeesClient = () => {
           Add new
         </Button>
       </div>
-    </div>
+      <Separator />
+      <DataTable columns={columns} data={data} />
+    </>
   );
 };
-
-export default EmployeesClient;
