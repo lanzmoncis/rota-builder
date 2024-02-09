@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
+import { Heading } from "@/components/ui/headings";
 
 import { EmployeeColumn, columns } from "./columns";
 
@@ -19,12 +20,7 @@ export const EmployeesClient: React.FC<EmployeeClientProps> = ({ data }) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl">Employees</h2>
-          <p className="text-[12px] text-muted-foreground">
-            Manage your employees
-          </p>
-        </div>
+        <Heading title="Employee" description="Manage your employees" />
         <Button onClick={() => router.push(`/employees/new`)}>
           <Plus className="w-4 h-4 mr-2" />
           Add new

@@ -1,11 +1,13 @@
 "use client";
 
 import * as z from "zod";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { formSchema } from "@/lib/schema";
@@ -28,16 +30,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/components/ui/use-toast";
+import { Heading } from "@/components/ui/headings";
+import { Separator } from "@/components/ui/separator";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 type EmployeeFormValue = z.infer<typeof formSchema>;
 
-const EmployeeForm: React.FC = () => {
+interface EmployeeFormProps {
+  initialData: Employee | null;
+}
+
+const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
   const { toast } = useToast();
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const title = initialData ? "Edit employee" : "Add employee";
+  const description = initialData
+    ? `Edit ${initialData.name} details`
+    : "Add a new employee";
+  const actions = initialData ? "Save changes" : "Add";
+  const toastTitle = initialData ? "Employee updated" : "Employee added";
+
   const form = useForm<EmployeeFormValue>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: initialData || {
       name: "",
       jobTitle: "",
       dateStarted: undefined,
@@ -46,7 +65,8 @@ const EmployeeForm: React.FC = () => {
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: EmployeeFormValue) => {
+    setLoading(true);
     const result = await addEmployee(values);
 
     if (!result) {
@@ -54,17 +74,38 @@ const EmployeeForm: React.FC = () => {
       return;
     }
 
-    console.log(result);
     router.refresh();
     router.push("/employees");
     toast({
-      title: "Scheduled: Catch up",
+      title: `${toastTitle}`,
       description: "Friday, February 10, 2023 at 5:57 PM",
     });
   };
 
+  const onDelete = async () => {};
+
   return (
-    <div className="p-8">
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
+      <div className="flex items-center justify-between">
+        <Heading title={title} description={description} />
+        {initialData && (
+          <Button
+            disabled={loading}
+            variant="destructive"
+            onClick={() => setOpen(true)}
+            size="icon"
+          >
+            <Trash className="w-4 h-4" />
+          </Button>
+        )}
+      </div>
+      <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-3 mb-6">
@@ -172,10 +213,10 @@ const EmployeeForm: React.FC = () => {
               />
             </div>
           </div>
-          <Button type="submit">Save</Button>
+          <Button type="submit">{actions}</Button>
         </form>
       </Form>
-    </div>
+    </>
   );
 };
 
