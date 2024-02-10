@@ -48,10 +48,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? "Edit employee" : "Add employee";
-  const description = initialData
-    ? `Edit ${initialData.name} details`
-    : "Add a new employee";
-  const actions = initialData ? "Save changes" : "Add";
+  const actions = initialData ? "Save changes" : "Create new employee";
   const toastTitle = initialData ? "Employee updated" : "Employee added";
 
   const form = useForm<EmployeeFormValue>({
@@ -93,7 +90,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading title={title} description={description} />
+        <Heading title={title} />
         {initialData && (
           <Button
             disabled={loading}
@@ -108,16 +105,16 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <div className="grid grid-cols-3 mb-6">
-            <div className="flex flex-col gap-6">
+          <div className="px-6 py-4 bg-white rounded-sm">
+            <div className="flex flex-col gap-2">
               <FormField
                 name="name"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
+                    <FormLabel>Full name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Add name" type="text" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,14 +124,10 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 name="jobTitle"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
                     <FormLabel>Job title</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Add job title"
-                        type="text"
-                        {...field}
-                      />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -144,7 +137,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 control={form.control}
                 name="dateStarted"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
                     <FormLabel>Date started</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -185,14 +178,10 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 name="payrollId"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
                     <FormLabel>Payroll ID</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Add payroll id"
-                        type="text"
-                        {...field}
-                      />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -202,18 +191,26 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 name="hourlyRate"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
                     <FormLabel>Hourly rate</FormLabel>
                     <FormControl>
-                      <Input placeholder="Hourly rate" type="text" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+            <div className="flex gap-2 justify-end mt-2">
+              <Button
+                variant="outline"
+                onClick={() => router.push("/employees")}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">{actions}</Button>
+            </div>
           </div>
-          <Button type="submit">{actions}</Button>
         </form>
       </Form>
     </>

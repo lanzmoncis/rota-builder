@@ -12,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { AlertModal } from "@/components/modals/alert-modal";
 import { useToast } from "@/components/ui/use-toast";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 import { EmployeeColumn } from "./columns";
 
