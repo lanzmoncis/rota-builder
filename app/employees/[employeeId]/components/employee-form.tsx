@@ -11,7 +11,7 @@ import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { formSchema } from "@/lib/schema";
-import { addEmployee } from "@/lib/actions";
+import { addEmployee, updateEmployee, deleteEmployee } from "@/lib/actions";
 
 import {
   Form,
@@ -64,7 +64,13 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
 
   const handleSubmit = async (values: EmployeeFormValue) => {
     setLoading(true);
-    const result = await addEmployee(values);
+    let result;
+
+    if (initialData) {
+      result = await updateEmployee(values, initialData.id);
+    } else {
+      result = await addEmployee(values);
+    }
 
     if (!result) {
       console.log("Something went wrong");
@@ -79,7 +85,21 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
     });
   };
 
-  const onDelete = async () => {};
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      if (initialData) {
+        await deleteEmployee(initialData.id);
+      }
+      router.refresh();
+      router.push("/employees");
+    } catch (error) {
+      return "test";
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
 
   return (
     <>
@@ -202,10 +222,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
               />
             </div>
             <div className="flex gap-2 justify-end mt-2">
-              <Button
-                variant="outline"
-                onClick={() => router.push("/employees")}
-              >
+              <Button variant="outline" onClick={() => router.back()}>
                 Cancel
               </Button>
               <Button type="submit">{actions}</Button>
