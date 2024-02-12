@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
 
+import { deleteEmployee } from "@/lib/actions";
+
 import { EmployeeColumn } from "./columns";
 
 interface CellActionProps {
@@ -26,8 +28,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
-  const onConfirm = async () => {};
+  const onConfirm = async () => {
+    try {
+      setLoading(true);
+      await deleteEmployee(data.id);
+      toast({
+        description: "Employee deleted",
+      });
+    } catch (error) {
+      toast({ description: "Something went wrong" });
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
 
   return (
     <>

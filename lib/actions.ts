@@ -78,14 +78,13 @@ export async function updateEmployee(values: Inputs, employeeId: string) {
 
 export async function deleteEmployee(employeeId: string) {
   try {
-    const result = await db.employee.delete({
+    await db.employee.delete({
       where: {
         id: employeeId,
       },
     });
 
     revalidatePath("/employees");
-    return result;
   } catch (error) {
     return {
       message: "Database Error: Failed to delete employee.",

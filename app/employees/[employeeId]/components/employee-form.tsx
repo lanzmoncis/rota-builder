@@ -49,7 +49,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
 
   const title = initialData ? "Edit employee" : "Add employee";
   const actions = initialData ? "Save changes" : "Create new employee";
-  const toastTitle = initialData ? "Employee updated" : "Employee added";
+  const toastDescription = initialData ? "Employee updated" : "Employee added";
 
   const form = useForm<EmployeeFormValue>({
     resolver: zodResolver(formSchema),
@@ -63,26 +63,31 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
   });
 
   const handleSubmit = async (values: EmployeeFormValue) => {
-    setLoading(true);
-    let result;
+    try {
+      setLoading(true);
+      let result;
 
-    if (initialData) {
-      result = await updateEmployee(values, initialData.id);
-    } else {
-      result = await addEmployee(values);
+      if (initialData) {
+        result = await updateEmployee(values, initialData.id);
+      } else {
+        result = await addEmployee(values);
+      }
+
+      if (!result) {
+        toast({ description: "Something went wrong" });
+        return;
+      }
+
+      router.refresh();
+      router.push("/employees");
+      toast({
+        description: `${toastDescription}`,
+      });
+    } catch (error) {
+      toast({ description: "Something went wrong" });
+    } finally {
+      setLoading(false);
     }
-
-    if (!result) {
-      console.log("Something went wrong");
-      return;
-    }
-
-    router.refresh();
-    router.push("/employees");
-    toast({
-      title: `${toastTitle}`,
-      description: "Friday, February 10, 2023 at 5:57 PM",
-    });
   };
 
   const onDelete = async () => {
@@ -93,8 +98,9 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
       }
       router.refresh();
       router.push("/employees");
+      toast({ description: "Employee deleted" });
     } catch (error) {
-      return "test";
+      toast({ description: "Something went wrong" });
     } finally {
       setLoading(false);
       setOpen(false);

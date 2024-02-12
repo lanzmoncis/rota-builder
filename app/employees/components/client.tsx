@@ -22,13 +22,13 @@ export const EmployeesClient: React.FC<EmployeeClientProps> = ({ data }) => {
       <div className="flex justify-between items-center">
         <Heading title="Employees" />
         <Button onClick={() => router.push(`/employees/new`)}>
-          <Plus className="w-4 h-4 mr-2" />
+          <Plus className="mr-2 w-4 h-4" />
           Add new
         </Button>
       </div>
       <Separator />
-      <div className="bg-white">
-        <DataTable columns={columns} data={data} />
+      <div>
+        <DataTable searchKey="name" columns={columns} data={data} />
       </div>
     </>
   );
