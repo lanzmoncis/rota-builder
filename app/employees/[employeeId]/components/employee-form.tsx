@@ -132,12 +132,12 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="px-6 py-4 bg-white rounded-sm">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
               <FormField
                 name="name"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
                     <FormLabel>Full name</FormLabel>
                     <FormControl>
                       <Input {...field} />
@@ -150,7 +150,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 name="jobTitle"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
                     <FormLabel>Job title</FormLabel>
                     <FormControl>
                       <Input {...field} />
@@ -163,7 +163,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 control={form.control}
                 name="dateStarted"
                 render={({ field }) => (
-                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
                     <FormLabel>Date started</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -204,7 +204,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 name="payrollId"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
                     <FormLabel>Payroll ID</FormLabel>
                     <FormControl>
                       <Input {...field} />
@@ -217,7 +217,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 name="hourlyRate"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center">
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
                     <FormLabel>Hourly rate</FormLabel>
                     <FormControl>
                       <Input {...field} />

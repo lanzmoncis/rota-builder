@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { startOfWeek, addDays, format } from "date-fns";
 
+import { EmployeeTypeWithShifts } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 import {
@@ -12,24 +13,10 @@ import {
 } from "@/components/ui/context-menu";
 import AddShiftModal from "@/components/modals/add-shift-modal";
 
-interface Shift {
-  date: string;
-  department: string;
-  shiftTime: string;
-}
-
-interface EmployeeProps {
-  name: string;
-  id: number;
-  shifts: Shift[];
-}
-
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
-  employees: EmployeeProps[];
+  employees: EmployeeTypeWithShifts[];
 }
-
-// Still needs fixing
 
 const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   currentMonth,
@@ -60,7 +47,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
         employees={employees}
       />
       <div className="border-slate-400 border-t border-l bg-white">
-        {employees.map((employee, index) => (
+        {employees.map((employee: EmployeeTypeWithShifts, index: number) => (
           <div className="grid grid-cols-8" key={employee.id}>
             <div
               className={cn(
@@ -84,7 +71,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                           return formattedShiftDate === date;
                         })
                         .map((shift) => (
-                          <div key={shift.date} className="text-center text-sm">
+                          <div key={shift.id} className="text-center text-sm">
                             <div>{shift.department}</div>
                             <div>{shift.shiftTime}</div>
                           </div>

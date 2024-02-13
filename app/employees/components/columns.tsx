@@ -20,6 +20,10 @@ export const columns: ColumnDef<EmployeeColumn>[] = [
     header: "Name",
   },
   {
+    accessorKey: "payrollId",
+    header: "Payroll ID",
+  },
+  {
     accessorKey: "jobTitle",
     header: "Job title",
   },
@@ -27,7 +31,6 @@ export const columns: ColumnDef<EmployeeColumn>[] = [
     accessorKey: "hourlyRate",
     header: "Hourly rate",
   },
-
   {
     accessorKey: "dateStarted",
     header: "Date started",

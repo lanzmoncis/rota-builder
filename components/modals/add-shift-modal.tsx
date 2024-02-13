@@ -19,17 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-interface Shift {
-  date: string;
-  department: string;
-  shiftTime: string;
-}
-
-interface EmployeeProps {
-  name: string;
-  id: number;
-  shifts: Shift[];
-}
+import { EmployeeTypeWithShifts } from "@/lib/actions";
 
 interface AddShiftModalProps {
   isOpen: boolean;
@@ -37,7 +27,7 @@ interface AddShiftModalProps {
   loading: boolean;
   date: Date | null;
   employee: string | null;
-  employees: EmployeeProps[];
+  employees: EmployeeTypeWithShifts[];
 }
 
 const formSchema = z.object({
@@ -54,8 +44,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   onClose,
   loading,
   date,
-  employee,
-  // employees,
+  employees,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 

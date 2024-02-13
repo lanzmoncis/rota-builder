@@ -1,11 +1,17 @@
 "use server";
 
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
+
 import { formSchema } from "./schema";
 import { db } from "./db";
-import { revalidatePath } from "next/cache";
 
 type Inputs = z.infer<typeof formSchema>;
+
+export type EmployeeTypeWithShifts = Prisma.EmployeeGetPayload<{
+  include: { shifts: true };
+}>;
 
 export async function addEmployee(values: Inputs) {
   const employeeDataValidation = formSchema.safeParse(values);

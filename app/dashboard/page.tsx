@@ -1,9 +1,16 @@
 import WeeklyCalendar from "../dashboard/components/weekly-calendar";
+import { db } from "@/lib/db";
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  const employees = await db.employee.findMany({
+    include: {
+      shifts: true,
+    },
+  });
+
   return (
     <div>
-      <WeeklyCalendar />
+      <WeeklyCalendar employees={employees} />
     </div>
   );
 };
