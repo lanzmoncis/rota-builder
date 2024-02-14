@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
-import { formSchema } from "@/lib/schema";
+import { EmployeeFormSchema } from "@/lib/schema";
 import { addEmployee, updateEmployee, deleteEmployee } from "@/lib/actions";
 
 import {
@@ -34,7 +34,7 @@ import { Heading } from "@/components/ui/headings";
 import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-type EmployeeFormValue = z.infer<typeof formSchema>;
+type EmployeeFormValue = z.infer<typeof EmployeeFormSchema>;
 
 interface EmployeeFormProps {
   initialData: Employee | null;
@@ -52,7 +52,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
   const toastDescription = initialData ? "Employee updated" : "Employee added";
 
   const form = useForm<EmployeeFormValue>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(EmployeeFormSchema),
     defaultValues: initialData || {
       name: "",
       jobTitle: "",

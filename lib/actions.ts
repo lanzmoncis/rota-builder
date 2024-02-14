@@ -4,17 +4,19 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
 
-import { formSchema } from "./schema";
+import { EmployeeFormSchema, AddShiftFormSchema } from "./schema";
 import { db } from "./db";
 
-type Inputs = z.infer<typeof formSchema>;
+type EmployeeInputs = z.infer<typeof EmployeeFormSchema>;
+
+type AddShiftInputs = z.infer<typeof AddShiftFormSchema>;
 
 export type EmployeeTypeWithShifts = Prisma.EmployeeGetPayload<{
   include: { shifts: true };
 }>;
 
-export async function addEmployee(values: Inputs) {
-  const employeeDataValidation = formSchema.safeParse(values);
+export async function addEmployee(values: EmployeeInputs) {
+  const employeeDataValidation = EmployeeFormSchema.safeParse(values);
 
   if (!employeeDataValidation.success) {
     return {
@@ -46,8 +48,11 @@ export async function addEmployee(values: Inputs) {
   }
 }
 
-export async function updateEmployee(values: Inputs, employeeId: string) {
-  const employeeDataValidation = formSchema.safeParse(values);
+export async function updateEmployee(
+  values: EmployeeInputs,
+  employeeId: string
+) {
+  const employeeDataValidation = EmployeeFormSchema.safeParse(values);
 
   if (!employeeDataValidation.success) {
     return {
@@ -94,6 +99,40 @@ export async function deleteEmployee(employeeId: string) {
   } catch (error) {
     return {
       message: "Database Error: Failed to delete employee.",
+    };
+  }
+}
+
+export async function addShift(
+  values: AddShiftInputs,
+  employeeId: string,
+  date: Date
+) {
+  const addShiftDataValidation = AddShiftFormSchema.safeParse(values);
+
+  if (!addShiftDataValidation.success) {
+    return {
+      errors: addShiftDataValidation.error.flatten().fieldErrors,
+      message: "Failed to add shift.",
+    };
+  }
+
+  const { department, shiftTime } = addShiftDataValidation.data;
+  try {
+    const result = await db.shift.create({
+      data: {
+        department,
+        shiftTime,
+        date,
+        employeeId,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    return result;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to add shift.",
     };
   }
 }

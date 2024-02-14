@@ -23,9 +23,9 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   employees,
 }) => {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedEmployee, setSelectedEmployee] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
   const dateFormat = "EEE. MMM. dd, yyyy";
@@ -41,17 +41,15 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
       <AddShiftModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        loading={loading}
         date={selectedDate}
-        employee={selectedEmployee}
-        employees={employees}
+        employeeId={selectedEmployee}
       />
       <div className="border-slate-400 border-t border-l bg-white">
         {employees.map((employee: EmployeeTypeWithShifts, index: number) => (
           <div className="grid grid-cols-8" key={employee.id}>
             <div
               className={cn(
-                "h-20 flex justify-center items-center border-r border-b border-slate-400 text-sm",
+                "h-20 flex justify-center items-center border-r border-b  border-slate-400 text-sm",
                 index % 2 === 0 ? "bg-green-300" : "bg-green-200"
               )}
             >
@@ -83,13 +81,18 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                       onClick={() => {
                         setOpen(true);
                         setSelectedDate(addDays(startDate, i));
-                        setSelectedEmployee(employee.name);
+                        setSelectedEmployee(employee.id);
                       }}
                     >
-                      Add
+                      {employee.shifts.some(
+                        (shift) =>
+                          format(new Date(shift.date), dateFormat) === date
+                      )
+                        ? "Edit"
+                        : "Add"}
                     </ContextMenuItem>
-                    <ContextMenuItem>Edit</ContextMenuItem>
                     <ContextMenuItem>Copy</ContextMenuItem>
+                    <ContextMenuItem>Delete</ContextMenuItem>
                   </ContextMenuContent>
                 </ContextMenu>
               </React.Fragment>

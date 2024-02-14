@@ -1,12 +1,12 @@
 "use client";
 
+import * as z from "zod";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
-
 import { format } from "date-fns";
 
+import { toast } from "@/components/ui/use-toast";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -19,37 +19,27 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { EmployeeTypeWithShifts } from "@/lib/actions";
+import { addShift } from "@/lib/actions";
+import { AddShiftFormSchema } from "@/lib/schema";
 
 interface AddShiftModalProps {
   isOpen: boolean;
   onClose: () => void;
-  loading: boolean;
-  date: Date | null;
-  employee: string | null;
-  employees: EmployeeTypeWithShifts[];
+  date: Date;
+  employeeId: string;
 }
-
-const formSchema = z.object({
-  department: z.string().min(1, {
-    message: "Department must be at least 1 character.",
-  }),
-  shiftTime: z.string().min(1, {
-    message: "Shift time must be at least 1 character.",
-  }),
-});
 
 const AddShiftModal: React.FC<AddShiftModalProps> = ({
   isOpen,
   onClose,
-  loading,
   date,
-  employees,
+  employeeId,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof AddShiftFormSchema>>({
+    resolver: zodResolver(AddShiftFormSchema),
     defaultValues: {
       department: "",
       shiftTime: "",
@@ -64,17 +54,26 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
     return null;
   }
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    // const employeeIndex = employees.findIndex((emp) => emp.name === employee);
-    // if (employeeIndex !== -1) {
-    //   const newShift = {
-    //     date: date?.toISOString() || "",
-    //     department: values.department,
-    //     shiftTime: values.shiftTime,
-    //   };
-    //   employees[employeeIndex].shifts.push(newShift);
-    // }
-    // onClose();
+  const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
+    try {
+      setLoading(true);
+      const result = await addShift(values, employeeId, date);
+      if (!result) {
+        toast({
+          description: "Something went wrong",
+        });
+      }
+
+      toast({
+        description: "Shift added",
+      });
+    } catch (error) {
+      console.log(error);
+      toast({ description: "Something went wrong" });
+    } finally {
+      setLoading(false);
+      onClose();
+    }
   };
 
   return (
@@ -87,7 +86,6 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
       <Separator />
       <div className="py-4 mb-1">
         <p className="text-sm">
-          {/* {employee && `${employee}, `} */}
           <span>{date && `${format(date, "EEEE MMMM dd, yyyy")}`}</span>
         </p>
       </div>
