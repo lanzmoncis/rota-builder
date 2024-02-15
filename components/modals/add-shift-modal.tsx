@@ -58,6 +58,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
     try {
       setLoading(true);
       const result = await addShift(values, employeeId, date);
+
       if (!result) {
         toast({
           description: "Something went wrong",
