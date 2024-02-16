@@ -36,6 +36,8 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
     shiftDates.push(format(currentDate, dateFormat));
   }
 
+  console.log("`i'm here");
+
   return (
     <>
       <AddShiftModal
