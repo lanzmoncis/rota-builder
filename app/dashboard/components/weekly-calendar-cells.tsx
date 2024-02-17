@@ -5,6 +5,8 @@ import { startOfWeek, addDays, format } from "date-fns";
 import { EmployeeTypeWithShifts } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
+import { Shift } from "@prisma/client";
+
 import {
   ContextMenu,
   ContextMenuContent,
@@ -17,6 +19,8 @@ interface WeeklyCalendarCellProps {
   currentMonth: Date;
   employees: EmployeeTypeWithShifts[];
 }
+
+// needs to pass shift data
 
 const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   currentMonth,
