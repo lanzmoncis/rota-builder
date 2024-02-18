@@ -21,26 +21,33 @@ import {
 
 import { addShift } from "@/lib/actions";
 import { AddShiftFormSchema } from "@/lib/schema";
+import { Shift } from "@prisma/client";
 
 interface AddShiftModalProps {
   isOpen: boolean;
   onClose: () => void;
   date: Date;
   employeeId: string;
+  shift: Shift | null;
 }
+
+// Probably make it an intercepting route
 
 const AddShiftModal: React.FC<AddShiftModalProps> = ({
   isOpen,
   onClose,
   date,
   employeeId,
+  shift,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const title = shift ? "Edit shift" : "Add shift";
+
   const form = useForm<z.infer<typeof AddShiftFormSchema>>({
     resolver: zodResolver(AddShiftFormSchema),
-    defaultValues: {
+    defaultValues: shift || {
       department: "",
       shiftTime: "",
     },
@@ -79,7 +86,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
 
   return (
     <Modal
-      title="Add Shift"
+      title={title}
       description="Create shift to employee"
       isOpen={isOpen}
       onClose={onClose}

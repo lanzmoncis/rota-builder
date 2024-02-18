@@ -20,8 +20,6 @@ interface WeeklyCalendarCellProps {
   employees: EmployeeTypeWithShifts[];
 }
 
-// needs to pass shift data
-
 const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   currentMonth,
   employees,
@@ -29,6 +27,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedEmployee, setSelectedEmployee] = useState("");
+  const [selectedShift, setSelectedShift] = useState<Shift | null>(null);
 
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
@@ -40,8 +39,6 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
     shiftDates.push(format(currentDate, dateFormat));
   }
 
-  console.log("`i'm here");
-
   return (
     <>
       <AddShiftModal
@@ -49,6 +46,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
         onClose={() => setOpen(false)}
         date={selectedDate}
         employeeId={selectedEmployee}
+        shift={selectedShift}
       />
       <div className="border-slate-400 border-t border-l bg-white">
         {employees.map((employee: EmployeeTypeWithShifts, index: number) => (
@@ -85,6 +83,11 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                   <ContextMenuContent>
                     <ContextMenuItem
                       onClick={() => {
+                        const selectedShift = employee.shifts.find(
+                          (shift) =>
+                            format(new Date(shift.date), dateFormat) === date
+                        );
+                        setSelectedShift(selectedShift || null);
                         setOpen(true);
                         setSelectedDate(addDays(startDate, i));
                         setSelectedEmployee(employee.id);
