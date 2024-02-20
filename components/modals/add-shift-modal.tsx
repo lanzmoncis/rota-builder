@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 
+import { Shift } from "@prisma/client";
+
 import { toast } from "@/components/ui/use-toast";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
@@ -21,13 +23,11 @@ import {
 
 import { addShift } from "@/lib/actions";
 import { AddShiftFormSchema } from "@/lib/schema";
-import { Shift } from "@prisma/client";
 
 interface AddShiftModalProps {
   isOpen: boolean;
   onClose: () => void;
   date: Date;
-  employeeId: string;
   shift: Shift | null;
 }
 
@@ -37,7 +37,6 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   isOpen,
   onClose,
   date,
-  employeeId,
   shift,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -64,7 +63,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
     try {
       setLoading(true);
-      const result = await addShift(values, employeeId, date);
+      const result = await addShift(values, employee.id, date);
 
       if (!result) {
         toast({
