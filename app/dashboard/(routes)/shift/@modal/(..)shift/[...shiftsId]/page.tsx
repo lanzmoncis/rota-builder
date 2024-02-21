@@ -1,7 +1,11 @@
 import AddShiftModal from "@/components/modals/add-shift-modal";
 import { db } from "@/lib/db";
 
-const AddShiftModal = async ({ params }: { params: { shiftsId: string } }) => {
+const AddShiftModalPage = async ({
+  params,
+}: {
+  params: { shiftsId: string; employeeId: string };
+}) => {
   const shift = await db.shift.findUnique({
     where: {
       id: params.shiftsId,
@@ -10,9 +14,9 @@ const AddShiftModal = async ({ params }: { params: { shiftsId: string } }) => {
 
   return (
     <>
-      <AddShiftModal shift={shift} />
+      <AddShiftModal shift={shift} date={new Date()} />
     </>
   );
 };
 
-export default AddShiftModal;
+export default AddShiftModalPage;

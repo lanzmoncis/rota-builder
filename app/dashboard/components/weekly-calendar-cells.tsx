@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { startOfWeek, addDays, format } from "date-fns";
+import { useRouter } from "next/navigation";
 
 import { EmployeeTypeWithShifts } from "@/lib/actions";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,8 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   employees,
 }) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+
+  const router = useRouter();
 
   const dateFormat = "EEE. MMM. dd, yyyy";
   const shiftDates: string[] = [];
@@ -64,7 +67,11 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                   </div>
                 </ContextMenuTrigger>
                 <ContextMenuContent>
-                  <ContextMenuItem onClick={() => {}}>
+                  <ContextMenuItem
+                    onClick={() => {
+                      router.push(`/dashboard/shift/${employee.id}/new`);
+                    }}
+                  >
                     {employee.shifts.some(
                       (shift) =>
                         format(new Date(shift.date), dateFormat) === date

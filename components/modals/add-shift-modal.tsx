@@ -2,6 +2,7 @@
 
 import * as z from "zod";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
@@ -23,26 +24,28 @@ import {
 
 import { addShift } from "@/lib/actions";
 import { AddShiftFormSchema } from "@/lib/schema";
+import { useAddShiftModal } from "@/hooks/use-addShift-modal";
 
 interface AddShiftModalProps {
-  isOpen: boolean;
-  onClose: () => void;
   date: Date;
   shift: Shift | null;
 }
 
-// Probably make it an intercepting route
-
-const AddShiftModal: React.FC<AddShiftModalProps> = ({
-  isOpen,
-  onClose,
-  date,
-  shift,
-}) => {
+const AddShiftModal: React.FC<AddShiftModalProps> = ({ date, shift }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const params = useParams();
+
+  const onClose = useAddShiftModal((state) => state.onClose);
+  const onOpen = useAddShiftModal((state) => state.onOpen);
+  const isOpen = useAddShiftModal((state) => state.isOpen);
+
   const title = shift ? "Edit shift" : "Add shift";
+
+  const employeeId = Array.isArray(params.employeeId)
+    ? params.employeeId[0]
+    : params.employeeId;
 
   const form = useForm<z.infer<typeof AddShiftFormSchema>>({
     resolver: zodResolver(AddShiftFormSchema),
@@ -54,7 +57,10 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    if (!isOpen) {
+      onOpen();
+    }
+  }, [isOpen, onOpen]);
 
   if (!isMounted) {
     return null;
@@ -63,7 +69,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({
   const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
     try {
       setLoading(true);
-      const result = await addShift(values, employee.id, date);
+      const result = await addShift(values, employeeId, date);
 
       if (!result) {
         toast({
