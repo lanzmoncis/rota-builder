@@ -4,7 +4,7 @@ import ShiftsForm from "./components/shiftsForm";
 const ShiftsPage = async ({ params }: { params: { shiftsId: string } }) => {
   const shift = await db.shift.findUnique({
     where: {
-      id: params.shiftsId[0],
+      id: params.shiftsId,
     },
   });
   return (

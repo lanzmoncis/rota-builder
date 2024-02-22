@@ -69,7 +69,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                 <ContextMenuContent>
                   <ContextMenuItem
                     onClick={() => {
-                      router.push(`/dashboard/shift/${employee.id}/new`);
+                      router.push(`/dashboard/${employee.id}/shift/new`);
                     }}
                   >
                     {employee.shifts.some(
