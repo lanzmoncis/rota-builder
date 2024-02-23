@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 const AddShiftModalPage = async ({
   params,
 }: {
-  params: { shiftsId: string; employeeId: string };
+  params: { shiftsId: string };
 }) => {
   const shift = await db.shift.findUnique({
     where: {
