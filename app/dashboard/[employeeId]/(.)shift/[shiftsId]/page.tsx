@@ -14,7 +14,7 @@ const AddShiftModalPage = async ({
 
   return (
     <>
-      <AddShiftModal shift={shift} date={new Date()} />
+      <AddShiftModal shift={shift} />
     </>
   );
 };

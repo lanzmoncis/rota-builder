@@ -1,8 +1,8 @@
 "use client";
 
 import * as z from "zod";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useState } from "react";
+import { useParams, usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
@@ -27,25 +27,27 @@ import { AddShiftFormSchema } from "@/lib/schema";
 import { useAddShiftModal } from "@/hooks/use-addShift-modal";
 
 interface AddShiftModalProps {
-  date: Date;
   shift: Shift | null;
 }
 
-const AddShiftModal: React.FC<AddShiftModalProps> = ({ date, shift }) => {
-  const [isMounted, setIsMounted] = useState(false);
+const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
   const [loading, setLoading] = useState(false);
 
+  const pathname = usePathname();
   const params = useParams();
 
   const onClose = useAddShiftModal((state) => state.onClose);
-  const onOpen = useAddShiftModal((state) => state.onOpen);
-  const isOpen = useAddShiftModal((state) => state.isOpen);
+  const shiftDate = useAddShiftModal((state) => state.shiftDate);
 
   const title = shift ? "Edit shift" : "Add shift";
 
   const employeeId = Array.isArray(params.employeeId)
     ? params.employeeId[0]
     : params.employeeId;
+
+  const isFormModal =
+    pathname === `/dashboard/${employeeId}/shift/${params.shiftsId}` ||
+    pathname === `/dashboard/${employeeId}/shift/new`;
 
   const form = useForm<z.infer<typeof AddShiftFormSchema>>({
     resolver: zodResolver(AddShiftFormSchema),
@@ -55,21 +57,10 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ date, shift }) => {
     },
   });
 
-  useEffect(() => {
-    setIsMounted(true);
-    if (!isOpen) {
-      onOpen();
-    }
-  }, [isOpen, onOpen]);
-
-  if (!isMounted) {
-    return null;
-  }
-
   const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
     try {
       setLoading(true);
-      const result = await addShift(values, employeeId, date);
+      const result = await addShift(values, employeeId, shiftDate);
 
       if (!result) {
         toast({
@@ -93,13 +84,13 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ date, shift }) => {
     <Modal
       title={title}
       description="Create shift to employee"
-      isOpen={isOpen}
+      isOpen={isFormModal}
       onClose={onClose}
     >
       <Separator />
       <div className="py-4 mb-1">
         <p className="text-sm">
-          <span>{date && `${format(date, "EEEE MMMM dd, yyyy")}`}</span>
+          <span>{format(shiftDate, "EEEE MMMM dd, yyyy")}</span>
         </p>
       </div>
       <Form {...form}>

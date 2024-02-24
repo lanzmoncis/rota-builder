@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { EmployeeTypeWithShifts } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
+import { useAddShiftModal } from "@/hooks/use-addShift-modal";
+
 import {
   ContextMenu,
   ContextMenuContent,
@@ -22,6 +24,8 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   employees,
 }) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+
+  const setShiftDate = useAddShiftModal((state) => state.setShiftDate);
 
   const router = useRouter();
 
@@ -69,6 +73,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                 <ContextMenuContent>
                   <ContextMenuItem
                     onClick={() => {
+                      setShiftDate(new Date(date));
                       const shift = employee.shifts.find(
                         (shift) =>
                           format(new Date(shift.date), dateFormat) === date
