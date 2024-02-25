@@ -1,4 +1,4 @@
-import AddShiftModal from "@/components/modals/add-shift-modal";
+import AddShiftModal from "@/components/modals/add-shift-states";
 import { db } from "@/lib/db";
 
 const AddShiftModalPage = async ({

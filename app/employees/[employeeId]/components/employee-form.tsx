@@ -228,9 +228,6 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
               />
             </div>
             <div className="flex gap-2 justify-end mt-2">
-              <Button variant="outline" onClick={() => router.back()}>
-                Cancel
-              </Button>
               <Button type="submit">{actions}</Button>
             </div>
           </div>

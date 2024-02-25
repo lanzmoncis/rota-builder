@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import { useState } from "react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
@@ -35,19 +35,18 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
 
   const pathname = usePathname();
   const params = useParams();
+  const router = useRouter();
 
-  const onClose = useAddShiftModal((state) => state.onClose);
   const shiftDate = useAddShiftModal((state) => state.shiftDate);
+  const employeeId = useAddShiftModal((state) => state.employeeId);
 
   const title = shift ? "Edit shift" : "Add shift";
 
-  const employeeId = Array.isArray(params.employeeId)
-    ? params.employeeId[0]
-    : params.employeeId;
-
   const isFormModal =
-    pathname === `/dashboard/${employeeId}/shift/${params.shiftsId}` ||
-    pathname === `/dashboard/${employeeId}/shift/new`;
+    pathname === `/dashboard/shift/${params.shiftsId}` ||
+    pathname === `/dashboard/shift/new`;
+
+  const onClose = () => router.back();
 
   const form = useForm<z.infer<typeof AddShiftFormSchema>>({
     resolver: zodResolver(AddShiftFormSchema),
@@ -134,9 +133,6 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
             />
           </div>
           <div className="items-center justify-end w-full pt-6 space-x-2">
-            <Button disabled={loading} variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
             <Button disabled={loading} type="submit">
               Save
             </Button>

@@ -26,6 +26,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
   const setShiftDate = useAddShiftModal((state) => state.setShiftDate);
+  const setEmployeeId = useAddShiftModal((state) => state.setEmployeeId);
 
   const router = useRouter();
 
@@ -74,13 +75,14 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                   <ContextMenuItem
                     onClick={() => {
                       setShiftDate(new Date(date));
+                      setEmployeeId(employee.id);
                       const shift = employee.shifts.find(
                         (shift) =>
                           format(new Date(shift.date), dateFormat) === date
                       );
                       const route = shift
-                        ? `/dashboard/${employee.id}/shift/${shift.id}`
-                        : `/dashboard/${employee.id}/shift/new`;
+                        ? `/dashboard/shift/${shift.id}`
+                        : `/dashboard/shift/new`;
                       router.push(route);
                     }}
                   >
