@@ -22,15 +22,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { addShift } from "@/lib/actions";
+import { addShift, updateShift } from "@/lib/actions";
 import { AddShiftFormSchema } from "@/lib/schema";
-import { useAddShiftModal } from "@/hooks/use-addShift-modal";
+
+import { useAddShiftModal } from "@/hooks/use-addShift-states";
 
 interface AddShiftModalProps {
-  shift: Shift | null;
+  initialData: Shift | null;
 }
 
-const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
+const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
 
   const pathname = usePathname();
@@ -39,8 +40,11 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
 
   const shiftDate = useAddShiftModal((state) => state.shiftDate);
   const employeeId = useAddShiftModal((state) => state.employeeId);
+  const setEmployeeId = useAddShiftModal((state) => state.setEmployeeId);
 
-  const title = shift ? "Edit shift" : "Add shift";
+  const title = initialData ? "Edit shift" : "Add shift";
+  const actions = initialData ? "Save changes" : "Create shift";
+  const toastDescription = initialData ? "Shift updated" : "Shift added";
 
   const isFormModal =
     pathname === `/dashboard/shift/${params.shiftsId}` ||
@@ -50,7 +54,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
 
   const form = useForm<z.infer<typeof AddShiftFormSchema>>({
     resolver: zodResolver(AddShiftFormSchema),
-    defaultValues: shift || {
+    defaultValues: initialData || {
       department: "",
       shiftTime: "",
     },
@@ -59,7 +63,12 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
   const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
     try {
       setLoading(true);
-      const result = await addShift(values, employeeId, shiftDate);
+      let result;
+      if (initialData) {
+        result = await updateShift(values, initialData.id);
+      } else {
+        result = await addShift(values, employeeId, shiftDate);
+      }
 
       if (!result) {
         toast({
@@ -67,14 +76,16 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
         });
       }
 
+      router.refresh();
       toast({
-        description: "Shift added",
+        description: `${toastDescription}`,
       });
     } catch (error) {
       console.log(error);
       toast({ description: "Something went wrong" });
     } finally {
       setLoading(false);
+      setEmployeeId("");
       onClose();
     }
   };
@@ -134,7 +145,7 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ shift }) => {
           </div>
           <div className="items-center justify-end w-full pt-6 space-x-2">
             <Button disabled={loading} type="submit">
-              Save
+              {actions}
             </Button>
           </div>
         </form>

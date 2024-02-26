@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { EmployeeTypeWithShifts } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
-import { useAddShiftModal } from "@/hooks/use-addShift-modal";
+import { useAddShiftModal } from "@/hooks/use-addShift-states";
 
 import {
   ContextMenu,
@@ -93,8 +93,11 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                       ? "Edit"
                       : "Add"}
                   </ContextMenuItem>
-                  <ContextMenuItem>Copy</ContextMenuItem>
-                  <ContextMenuItem>Delete</ContextMenuItem>
+                  {employee.shifts.some(
+                    (shift) => format(new Date(shift.date), dateFormat) === date
+                  ) ? (
+                    <ContextMenuItem>Delete</ContextMenuItem>
+                  ) : null}
                 </ContextMenuContent>
               </ContextMenu>
             </React.Fragment>
