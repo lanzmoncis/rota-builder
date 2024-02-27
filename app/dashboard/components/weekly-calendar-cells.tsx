@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
 
-import { EmployeeTypeWithShifts } from "@/lib/actions";
+import { EmployeeTypeWithShifts, deleteShift } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 import { useAddShiftModal } from "@/hooks/use-addShift-states";
@@ -13,6 +13,8 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { useToast } from "@/components/ui/use-toast";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
@@ -25,10 +27,15 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
 }) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [shiftId, setShiftId] = useState("");
+
   const setShiftDate = useAddShiftModal((state) => state.setShiftDate);
   const setEmployeeId = useAddShiftModal((state) => state.setEmployeeId);
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const dateFormat = "EEE. MMM. dd, yyyy";
   const shiftDates: string[] = [];
@@ -38,73 +45,100 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
     shiftDates.push(format(currentDate, dateFormat));
   }
 
+  const onDelete = async (shiftId: string) => {
+    try {
+      setLoading(true);
+
+      await deleteShift(shiftId);
+      router.refresh();
+      toast({ description: "Shift deleted" });
+    } catch (error) {
+      toast({ description: "Something went wrong" });
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   return (
-    <div className="border-slate-400 border-t border-l bg-white">
-      {employees.map((employee: EmployeeTypeWithShifts, index: number) => (
-        <div className="grid grid-cols-8" key={employee.id}>
-          <div
-            className={cn(
-              "h-20 flex justify-center items-center border-r border-b  border-slate-400 text-sm",
-              index % 2 === 0 ? "bg-green-300" : "bg-green-200"
-            )}
-          >
-            {employee.name}
-          </div>
-          {shiftDates.map((date, i) => (
-            <React.Fragment key={i}>
-              <ContextMenu>
-                <ContextMenuTrigger>
-                  <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center">
-                    {employee.shifts
-                      .filter((shift) => {
-                        const formattedShiftDate = format(
-                          new Date(shift.date),
-                          dateFormat
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={() => onDelete(shiftId)}
+        loading={loading}
+      />
+      <div className="border-slate-400 border-t border-l bg-white">
+        {employees.map((employee: EmployeeTypeWithShifts, index: number) => (
+          <div className="grid grid-cols-8" key={employee.id}>
+            <div
+              className={cn(
+                "h-20 flex justify-center items-center border-r border-b  border-slate-400 text-sm",
+                index % 2 === 0 ? "bg-green-300" : "bg-green-200"
+              )}
+            >
+              {employee.name}
+            </div>
+            {shiftDates.map((date, i) => (
+              <React.Fragment key={i}>
+                <ContextMenu>
+                  <ContextMenuTrigger>
+                    <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center">
+                      {employee.shifts
+                        .filter((shift) => {
+                          const formattedShiftDate = format(
+                            new Date(shift.date),
+                            dateFormat
+                          );
+                          return formattedShiftDate === date;
+                        })
+                        .map((shift) => (
+                          <div key={shift.id} className="text-center text-sm">
+                            <div>{shift.department}</div>
+                            <div>{shift.shiftTime}</div>
+                          </div>
+                        ))}
+                    </div>
+                  </ContextMenuTrigger>
+                  <ContextMenuContent>
+                    <ContextMenuItem
+                      onClick={() => {
+                        setShiftDate(new Date(date));
+                        setEmployeeId(employee.id);
+                        const shift = employee.shifts.find(
+                          (shift) =>
+                            format(new Date(shift.date), dateFormat) === date
                         );
-                        return formattedShiftDate === date;
-                      })
-                      .map((shift) => (
-                        <div key={shift.id} className="text-center text-sm">
-                          <div>{shift.department}</div>
-                          <div>{shift.shiftTime}</div>
-                        </div>
-                      ))}
-                  </div>
-                </ContextMenuTrigger>
-                <ContextMenuContent>
-                  <ContextMenuItem
-                    onClick={() => {
-                      setShiftDate(new Date(date));
-                      setEmployeeId(employee.id);
-                      const shift = employee.shifts.find(
+                        const route = shift
+                          ? `/dashboard/shift/${shift.id}`
+                          : `/dashboard/shift/new`;
+                        router.push(route);
+                      }}
+                    >
+                      {employee.shifts.some(
                         (shift) =>
                           format(new Date(shift.date), dateFormat) === date
-                      );
-                      const route = shift
-                        ? `/dashboard/shift/${shift.id}`
-                        : `/dashboard/shift/new`;
-                      router.push(route);
-                    }}
-                  >
+                      )
+                        ? "Edit"
+                        : "Add"}
+                    </ContextMenuItem>
                     {employee.shifts.some(
                       (shift) =>
                         format(new Date(shift.date), dateFormat) === date
-                    )
-                      ? "Edit"
-                      : "Add"}
-                  </ContextMenuItem>
-                  {employee.shifts.some(
-                    (shift) => format(new Date(shift.date), dateFormat) === date
-                  ) ? (
-                    <ContextMenuItem>Delete</ContextMenuItem>
-                  ) : null}
-                </ContextMenuContent>
-              </ContextMenu>
-            </React.Fragment>
-          ))}
-        </div>
-      ))}
-    </div>
+                    ) ? (
+                      // needs to map for shifts
+                      <ContextMenuItem onClick={() => setOpen(true)}>
+                        Delete
+                      </ContextMenuItem>
+                    ) : null}
+                  </ContextMenuContent>
+                </ContextMenu>
+              </React.Fragment>
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
