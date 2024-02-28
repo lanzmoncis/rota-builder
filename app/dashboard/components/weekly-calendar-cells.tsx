@@ -117,16 +117,14 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                         router.push(route);
                       }}
                     >
-                      {
-                        employee.shifts.some(
-                          (shift) =>
-                            format(new Date(shift.date), dateFormat) === date
-                        ) ? (
-                          <Edit className="w-4 h-4 mr-2" /> // Edit icon
-                        ) : (
-                          <CalendarPlus className="w-4 h-4 mr-2" />
-                        ) // Plus icon
-                      }
+                      {employee.shifts.some(
+                        (shift) =>
+                          format(new Date(shift.date), dateFormat) === date
+                      ) ? (
+                        <Edit className="w-4 h-4 mr-2" />
+                      ) : (
+                        <CalendarPlus className="w-4 h-4 mr-2" />
+                      )}
                       {employee.shifts.some(
                         (shift) =>
                           format(new Date(shift.date), dateFormat) === date
