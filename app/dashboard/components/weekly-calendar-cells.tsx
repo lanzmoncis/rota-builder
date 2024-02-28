@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
+import { Edit, Trash, CalendarPlus } from "lucide-react";
 
 import { EmployeeTypeWithShifts, deleteShift } from "@/lib/actions";
 import { cn } from "@/lib/utils";
@@ -56,6 +57,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
       toast({ description: "Something went wrong" });
     } finally {
       setLoading(false);
+      setShiftId("");
       setOpen(false);
     }
   };
@@ -115,6 +117,16 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                         router.push(route);
                       }}
                     >
+                      {
+                        employee.shifts.some(
+                          (shift) =>
+                            format(new Date(shift.date), dateFormat) === date
+                        ) ? (
+                          <Edit className="w-4 h-4 mr-2" /> // Edit icon
+                        ) : (
+                          <CalendarPlus className="w-4 h-4 mr-2" />
+                        ) // Plus icon
+                      }
                       {employee.shifts.some(
                         (shift) =>
                           format(new Date(shift.date), dateFormat) === date
@@ -126,8 +138,19 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                       (shift) =>
                         format(new Date(shift.date), dateFormat) === date
                     ) ? (
-                      // needs to map for shifts
-                      <ContextMenuItem onClick={() => setOpen(true)}>
+                      <ContextMenuItem
+                        onClick={() => {
+                          const shift = employee.shifts.find(
+                            (shift) =>
+                              format(new Date(shift.date), dateFormat) === date
+                          );
+                          if (shift) {
+                            setOpen(true);
+                            setShiftId(shift.id);
+                          }
+                        }}
+                      >
+                        <Trash className="w-4 h-4 mr-2" />
                         Delete
                       </ContextMenuItem>
                     ) : null}
