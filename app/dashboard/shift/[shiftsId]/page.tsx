@@ -8,7 +8,7 @@ const ShiftsPage = async ({ params }: { params: { shiftsId: string } }) => {
     },
   });
   return (
-    <div>
+    <div className="space-y-4 p-8">
       <ShiftsForm initialData={shift} />
     </div>
   );

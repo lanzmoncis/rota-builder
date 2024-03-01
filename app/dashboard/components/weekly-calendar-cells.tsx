@@ -6,7 +6,7 @@ import { Edit, Trash, CalendarPlus } from "lucide-react";
 import { EmployeeTypeWithShifts, deleteShift } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
-import { useAddShiftModal } from "@/hooks/use-addShift-states";
+import { useAddShiftStore } from "@/hooks/use-addShift-store";
 
 import {
   ContextMenu,
@@ -32,8 +32,8 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   const [loading, setLoading] = useState(false);
   const [shiftId, setShiftId] = useState("");
 
-  const setShiftDate = useAddShiftModal((state) => state.setShiftDate);
-  const setEmployeeId = useAddShiftModal((state) => state.setEmployeeId);
+  const setShiftDate = useAddShiftStore((state) => state.setShiftDate);
+  const setEmployeeId = useAddShiftStore((state) => state.setEmployeeId);
 
   const router = useRouter();
   const { toast } = useToast();
@@ -49,7 +49,6 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   const onDelete = async (shiftId: string) => {
     try {
       setLoading(true);
-
       await deleteShift(shiftId);
       router.refresh();
       toast({ description: "Shift deleted" });
@@ -57,8 +56,8 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
       toast({ description: "Something went wrong" });
     } finally {
       setLoading(false);
-      setShiftId("");
       setOpen(false);
+      setShiftId("");
     }
   };
 

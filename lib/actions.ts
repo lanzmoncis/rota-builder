@@ -65,7 +65,7 @@ export async function updateEmployee(
     employeeDataValidation.data;
 
   try {
-    const result = db.employee.update({
+    const result = await db.employee.update({
       where: {
         id: employeeId,
       },

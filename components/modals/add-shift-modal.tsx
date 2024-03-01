@@ -25,7 +25,7 @@ import {
 import { addShift, updateShift } from "@/lib/actions";
 import { AddShiftFormSchema } from "@/lib/schema";
 
-import { useAddShiftModal } from "@/hooks/use-addShift-states";
+import { useAddShiftStore } from "@/hooks/use-addShift-store";
 
 interface AddShiftModalProps {
   initialData: Shift | null;
@@ -38,9 +38,9 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
-  const shiftDate = useAddShiftModal((state) => state.shiftDate);
-  const employeeId = useAddShiftModal((state) => state.employeeId);
-  const setEmployeeId = useAddShiftModal((state) => state.setEmployeeId);
+  const shiftDate = useAddShiftStore((state) => state.shiftDate);
+  const employeeId = useAddShiftStore((state) => state.employeeId);
+  const setEmployeeId = useAddShiftStore((state) => state.setEmployeeId);
 
   const title = initialData ? "Edit shift" : "Add shift";
   const actions = initialData ? "Save changes" : "Create shift";
