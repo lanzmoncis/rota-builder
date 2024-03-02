@@ -3,7 +3,7 @@ import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Edit, Trash, CalendarPlus } from "lucide-react";
 
-import { EmployeeTypeWithShifts, deleteShift } from "@/lib/actions";
+import { deleteShift } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 import { useAddShiftStore } from "@/hooks/use-addShift-store";
@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/context-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { EmployeeWithShift } from "@/types";
 
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
-  employees: EmployeeTypeWithShifts[];
+  employees: EmployeeWithShift[];
 }
 
 const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
@@ -70,7 +71,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
         loading={loading}
       />
       <div className="border-slate-400 border-t border-l bg-white">
-        {employees.map((employee: EmployeeTypeWithShifts, index: number) => (
+        {employees.map((employee: EmployeeWithShift, index: number) => (
           <div className="grid grid-cols-8" key={employee.id}>
             <div
               className={cn(
