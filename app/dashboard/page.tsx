@@ -1,18 +1,25 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
+
+import { db } from "@/lib/db";
 
 import WeeklyCalendar from "../dashboard/components/weekly-calendar";
 
 const DashboardPage = async () => {
-  const { isAuthenticated } = getKindeServerSession();
+  const { isAuthenticated, getUser } = getKindeServerSession();
 
   const isLoggedIn = await isAuthenticated();
 
   if (!isLoggedIn) {
     redirect("/api/auth/login");
   }
+
+  const user = await getUser();
+
   const employees = await db.employee.findMany({
+    where: {
+      userId: user?.id,
+    },
     include: {
       shifts: true,
     },

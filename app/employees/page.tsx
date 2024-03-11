@@ -1,3 +1,5 @@
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 import { format } from "date-fns";
 
 import { db } from "@/lib/db";
@@ -5,7 +7,20 @@ import { EmployeesClient } from "./components/client";
 import { EmployeeColumn } from "./components/columns";
 
 const EmployeesPage = async () => {
+  const { isAuthenticated, getUser } = getKindeServerSession();
+
+  const isLoggedIn = await isAuthenticated();
+
+  if (!isLoggedIn) {
+    redirect("/api/auth/login");
+  }
+
+  const user = await getUser();
+
   const employees = await db.employee.findMany({
+    where: {
+      userId: user?.id,
+    },
     orderBy: {
       createdAt: "desc",
     },
