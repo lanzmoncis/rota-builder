@@ -24,8 +24,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { addShift, updateShift, deleteShift } from "@/lib/actions";
-import { AddShiftFormSchema } from "@/lib/schema";
+// import { addShift, updateShift, deleteShift } from "@/lib/actions";
+import { addShift } from "@/actions/addShift";
+import { updateShift } from "@/actions/updateShift";
+import { deleteShift } from "@/actions/deleteShift";
+import { ShiftFormSchema } from "@/lib/schema";
 
 import { useAddShiftStore } from "@/hooks/use-addShift-store";
 
@@ -47,15 +50,15 @@ const ShiftsForm: React.FC<ShiftsFormProps> = ({ initialData }) => {
   const actions = initialData ? "Save changes" : "Create shift";
   const toastDescription = initialData ? "Shift updated" : "Shift added";
 
-  const form = useForm<z.infer<typeof AddShiftFormSchema>>({
-    resolver: zodResolver(AddShiftFormSchema),
+  const form = useForm<z.infer<typeof ShiftFormSchema>>({
+    resolver: zodResolver(ShiftFormSchema),
     defaultValues: initialData || {
       department: "",
       shiftTime: "",
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof ShiftFormSchema>) => {
     try {
       setLoading(true);
       let result;

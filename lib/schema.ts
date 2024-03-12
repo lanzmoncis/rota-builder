@@ -18,7 +18,7 @@ export const EmployeeFormSchema = z.object({
   }),
 });
 
-export const AddShiftFormSchema = z.object({
+export const ShiftFormSchema = z.object({
   department: z.string().min(1, {
     message: "Department must be at least 1 character.",
   }),

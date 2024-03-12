@@ -22,8 +22,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { addShift, updateShift } from "@/lib/actions";
-import { AddShiftFormSchema } from "@/lib/schema";
+// import { addShift, updateShift } from "@/lib/actions";
+import { addShift } from "@/actions/addShift";
+import { updateShift } from "@/actions/updateShift";
+
+import { ShiftFormSchema } from "@/lib/schema";
 
 import { useAddShiftStore } from "@/hooks/use-addShift-store";
 
@@ -52,15 +55,15 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
 
   const onClose = () => router.back();
 
-  const form = useForm<z.infer<typeof AddShiftFormSchema>>({
-    resolver: zodResolver(AddShiftFormSchema),
+  const form = useForm<z.infer<typeof ShiftFormSchema>>({
+    resolver: zodResolver(ShiftFormSchema),
     defaultValues: initialData || {
       department: "",
       shiftTime: "",
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof AddShiftFormSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof ShiftFormSchema>) => {
     try {
       setLoading(true);
       let result;

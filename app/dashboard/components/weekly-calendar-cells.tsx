@@ -3,7 +3,8 @@ import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Edit, Trash, CalendarPlus } from "lucide-react";
 
-import { deleteShift } from "@/lib/actions";
+// import { deleteShift } from "@/lib/actions";
+import { deleteShift } from "@/actions/deleteShift";
 import { cn } from "@/lib/utils";
 
 import { useAddShiftStore } from "@/hooks/use-addShift-store";

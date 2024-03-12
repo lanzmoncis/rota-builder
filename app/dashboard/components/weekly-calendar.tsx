@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
-import { EmployeeTypeWithShifts } from "@/lib/actions";
+// import { EmployeeTypeWithShifts } from "@/lib/actions";
+import { EmployeeWithShift } from "@/types";
 
 import WeeklyCalendarHeader from "./weekly-calendar-header";
 import WeeklyCalendarCells from "./weekly-calendar-cells";
 
 interface WeeklyCalendarProps {
-  employees: EmployeeTypeWithShifts[];
+  employees: EmployeeWithShift[];
 }
 
 const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {

@@ -11,7 +11,10 @@ import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { EmployeeFormSchema } from "@/lib/schema";
-import { addEmployee, updateEmployee, deleteEmployee } from "@/lib/actions";
+// import { addEmployee, updateEmployee, deleteEmployee } from "@/lib/actions";
+import { addEmployee } from "@/actions/addEmployee";
+import { updateEmployee } from "@/actions/updateEmployee";
+import { deleteEmployee } from "@/actions/deleteEmployee";
 
 import {
   Form,
