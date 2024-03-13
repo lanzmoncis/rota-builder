@@ -1,5 +1,9 @@
+"use server";
+
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { EmployeeFormSchema } from "@/lib/schema";
 import { db } from "@/lib/db";
@@ -7,6 +11,12 @@ import { db } from "@/lib/db";
 type EmployeeInputs = z.infer<typeof EmployeeFormSchema>;
 
 export async function addEmployee(values: EmployeeInputs) {
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+  if (!isLoggedIn) {
+    redirect("/api/auth/login");
+  }
+  const user = await getUser();
   const employeeDataValidation = EmployeeFormSchema.safeParse(values);
 
   if (!employeeDataValidation.success) {
@@ -27,6 +37,7 @@ export async function addEmployee(values: EmployeeInputs) {
         dateStarted,
         payrollId,
         hourlyRate,
+        userId: user?.id as string,
       },
     });
 
