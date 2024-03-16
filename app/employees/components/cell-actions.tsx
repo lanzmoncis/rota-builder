@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-// import { deleteEmployee } from "@/lib/actions";
 import { deleteEmployee } from "@/actions/deleteEmployee";
 
 import { EmployeeColumn } from "./columns";

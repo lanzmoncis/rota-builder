@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { ShiftFormSchema } from "@/lib/schema";
 import { db } from "@/lib/db";
@@ -13,6 +15,12 @@ export async function addShift(
   employeeId: string,
   date: Date
 ) {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+
+  if (!isLoggedIn) {
+    redirect("/api/auth/login");
+  }
   const addShiftDataValidation = ShiftFormSchema.safeParse(values);
 
   if (!addShiftDataValidation.success) {

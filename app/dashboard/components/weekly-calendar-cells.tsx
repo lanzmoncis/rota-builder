@@ -3,7 +3,6 @@ import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Edit, Trash, CalendarPlus } from "lucide-react";
 
-// import { deleteShift } from "@/lib/actions";
 import { deleteShift } from "@/actions/deleteShift";
 import { cn } from "@/lib/utils";
 
@@ -29,8 +28,6 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   employees,
 }) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
-
-  // I'm Here!
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);

@@ -13,10 +13,12 @@ type EmployeeInputs = z.infer<typeof EmployeeFormSchema>;
 export async function addEmployee(values: EmployeeInputs) {
   const { isAuthenticated, getUser } = getKindeServerSession();
   const isLoggedIn = await isAuthenticated();
+
   if (!isLoggedIn) {
     redirect("/api/auth/login");
   }
   const user = await getUser();
+
   const employeeDataValidation = EmployeeFormSchema.safeParse(values);
 
   if (!employeeDataValidation.success) {

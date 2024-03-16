@@ -11,7 +11,7 @@ import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { EmployeeFormSchema } from "@/lib/schema";
-// import { addEmployee, updateEmployee, deleteEmployee } from "@/lib/actions";
+
 import { addEmployee } from "@/actions/addEmployee";
 import { updateEmployee } from "@/actions/updateEmployee";
 import { deleteEmployee } from "@/actions/deleteEmployee";
@@ -231,7 +231,9 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
               />
             </div>
             <div className="flex gap-2 justify-end mt-2">
-              <Button type="submit">{actions}</Button>
+              <Button type="submit" disabled={loading}>
+                {actions}
+              </Button>
             </div>
           </div>
         </form>

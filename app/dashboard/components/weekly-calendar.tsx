@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
-// import { EmployeeTypeWithShifts } from "@/lib/actions";
 import { EmployeeWithShift } from "@/types";
 
 import WeeklyCalendarHeader from "./weekly-calendar-header";
@@ -39,7 +38,7 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
         <div className="text-xl text-black">
           {format(new Date(), "MMMM d yyyy")}
         </div>
-        <div className="flex gap-2 mb-10 text-sm bg-white py-1 px-2 rounded-sm">
+        <div className="flex gap-2 mb-10 text-sm bg-white py-1 px-1 rounded-sm shadow-sm">
           <button
             onClick={goToToday}
             className="bg-green-400 hover:bg-green-500 duration-200 py-1 px-2 rounded-sm"
@@ -60,8 +59,13 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
           </button>
         </div>
       </div>
-      <WeeklyCalendarHeader currentMonth={currentMonth} />
-      <WeeklyCalendarCells currentMonth={currentMonth} employees={employees} />
+      <div className="px-10 pt-5 pb-10 bg-white shadow-sm rounded-md">
+        <WeeklyCalendarHeader currentMonth={currentMonth} />
+        <WeeklyCalendarCells
+          currentMonth={currentMonth}
+          employees={employees}
+        />
+      </div>
     </div>
   );
 };
