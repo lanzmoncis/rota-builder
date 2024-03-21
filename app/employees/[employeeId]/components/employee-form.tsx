@@ -36,6 +36,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Heading } from "@/components/ui/headings";
 import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { ImageUpload } from "@/components/ui/imageUpload";
 
 type EmployeeFormValue = z.infer<typeof EmployeeFormSchema>;
 
@@ -57,6 +58,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
   const form = useForm<EmployeeFormValue>({
     resolver: zodResolver(EmployeeFormSchema),
     defaultValues: initialData || {
+      imageUrl: "",
       name: "",
       jobTitle: "",
       dateStarted: undefined,
@@ -123,7 +125,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
         {initialData && (
           <Button
             disabled={loading}
-            variant="destructive"
+            variant="outline"
             onClick={() => setOpen(true)}
             size="icon"
           >
@@ -136,6 +138,23 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="px-6 py-4 bg-white rounded-sm">
             <div className="flex flex-col gap-4">
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
+                    <FormLabel>Employee Image</FormLabel>
+                    <FormControl>
+                      <ImageUpload
+                        value={field.value ? [field.value] : []}
+                        onChange={(url) => field.onChange(url)}
+                        onRemove={() => field.onChange("")}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 name="name"
                 control={form.control}

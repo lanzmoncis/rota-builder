@@ -28,12 +28,13 @@ export async function addEmployee(values: EmployeeInputs) {
     };
   }
 
-  const { name, jobTitle, dateStarted, payrollId, hourlyRate } =
+  const { name, jobTitle, dateStarted, payrollId, hourlyRate, imageUrl } =
     employeeDataValidation.data;
 
   try {
     const result = await db.employee.create({
       data: {
+        imageUrl,
         name,
         jobTitle,
         dateStarted,

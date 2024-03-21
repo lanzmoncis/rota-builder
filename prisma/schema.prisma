@@ -20,6 +20,7 @@ model Employee {
   dateStarted DateTime
   payrollId   String
   hourlyRate  String
+  imageUrl    String
   shifts      Shift[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

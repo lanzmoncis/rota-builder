@@ -16,6 +16,7 @@ export const EmployeeFormSchema = z.object({
   hourlyRate: z.string().min(1, {
     message: "Rate must be at least 1",
   }),
+  imageUrl: z.string().or(z.literal("")),
 });
 
 export const ShiftFormSchema = z.object({

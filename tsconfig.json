@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["@uploadcare/blocks/types/jsx"]
   },
   "include": [
     "next-env.d.ts",
@@ -29,5 +30,6 @@
     ".next/types/**/*.ts",
     "app/api/auth/[kindeAuth]/route.js"
   ],
+
   "exclude": ["node_modules"]
 }

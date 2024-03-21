@@ -117,7 +117,7 @@ const ShiftsForm: React.FC<ShiftsFormProps> = ({ initialData }) => {
         {initialData && (
           <Button
             disabled={loading}
-            variant="destructive"
+            variant="outline"
             onClick={() => setOpen(true)}
             size="icon"
           >
