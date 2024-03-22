@@ -63,6 +63,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
+
       <lr-config
         ctx-name="my-uploader"
         pubkey="6004d2fc99eba8f3c184"
@@ -72,8 +73,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         source-list="local, url, dropbox"
       />
 
-      <lr-file-uploader-regular
+      {/* <lr-file-uploader-regular
         css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css"
+        ctx-name="my-uploader"
+        class="my-config"
+      /> */}
+      <lr-file-uploader-minimal
+        css-src="https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-minimal.min.css"
         ctx-name="my-uploader"
         class="my-config"
       />

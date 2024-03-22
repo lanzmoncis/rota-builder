@@ -31,9 +31,6 @@ const Header = () => {
           </li>
         )}
         <li>
-          <Moon color="#15803d" className="w-5 h-5" />
-        </li>
-        <li>
           {isAuthenticated && (
             <LogoutLink>
               <LogOut color="#15803d" className="w-5 h-5" />
