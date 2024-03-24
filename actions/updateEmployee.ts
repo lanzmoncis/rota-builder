@@ -30,7 +30,7 @@ export async function updateEmployee(
     };
   }
 
-  const { name, jobTitle, dateStarted, payrollId, hourlyRate } =
+  const { name, jobTitle, dateStarted, payrollId, hourlyRate, imageUrl } =
     employeeDataValidation.data;
 
   try {
@@ -39,6 +39,7 @@ export async function updateEmployee(
         id: employeeId,
       },
       data: {
+        imageUrl,
         name,
         jobTitle,
         dateStarted,
