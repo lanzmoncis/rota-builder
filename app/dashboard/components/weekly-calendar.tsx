@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
-import { EmployeeWithShift } from "@/types";
+import { EmployeeWithShift } from "@/lib/types";
 
 import WeeklyCalendarHeader from "./weekly-calendar-header";
 import WeeklyCalendarCells from "./weekly-calendar-cells";

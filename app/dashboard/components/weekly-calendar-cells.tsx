@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/context-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { EmployeeWithShift } from "@/types";
+import { EmployeeWithShift } from "@/lib/types";
 
 interface WeeklyCalendarCellProps {
   currentMonth: Date;

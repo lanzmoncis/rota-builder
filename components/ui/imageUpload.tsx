@@ -58,7 +58,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
               fill
               className="object-cover"
               alt="Employee image"
-              src={url}
+              src={`${url}-/scale_crop/300x300/`}
             />
           </div>
         ))}
