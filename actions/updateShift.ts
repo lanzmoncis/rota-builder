@@ -23,7 +23,7 @@ export async function updateShift(values: AddShiftInputs, shiftId: string) {
   if (!addShiftDataValidation.success) {
     return {
       errors: addShiftDataValidation.error.flatten().fieldErrors,
-      message: "Failed to add shift.",
+      message: "Failed to update shift.",
     };
   }
 

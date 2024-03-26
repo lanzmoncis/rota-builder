@@ -26,7 +26,7 @@ export async function updateEmployee(
   if (!employeeDataValidation.success) {
     return {
       errors: employeeDataValidation.error.flatten().fieldErrors,
-      message: "Failed to add employee.",
+      message: "Failed to update employee.",
     };
   }
 
