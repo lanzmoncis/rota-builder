@@ -22,8 +22,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { addShift } from "@/actions/addShift";
-import { updateShift } from "@/actions/updateShift";
+import { addShift } from "@/actions/add-shift";
+import { updateShift } from "@/actions/update-shift";
 
 import { ShiftFormSchema } from "@/lib/schema";
 

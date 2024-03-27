@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-actions";
+import { EmployeeAvatar } from "./employee-avatar";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -11,10 +12,21 @@ export type EmployeeColumn = {
   jobTitle: string;
   payrollId: string;
   hourlyRate: string;
+  imageUrl: string;
   dateStarted: string;
 };
 
 export const columns: ColumnDef<EmployeeColumn>[] = [
+  {
+    accessorKey: "imageUrl",
+    header: undefined,
+    cell: ({ row }) => (
+      <EmployeeAvatar
+        imageUrl={row.getValue("imageUrl")}
+        name={row.getValue("name")}
+      />
+    ),
+  },
   {
     accessorKey: "name",
     header: "Name",

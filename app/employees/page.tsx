@@ -32,6 +32,7 @@ const EmployeesPage = async () => {
     jobTitle: item.jobTitle,
     payrollId: item.payrollId,
     hourlyRate: item.hourlyRate,
+    imageUrl: item.imageUrl,
     dateStarted: format(item.dateStarted, "MMM do yyyy"),
   }));
 

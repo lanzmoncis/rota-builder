@@ -12,9 +12,9 @@ import { Employee } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { EmployeeFormSchema } from "@/lib/schema";
 
-import { addEmployee } from "@/actions/addEmployee";
-import { updateEmployee } from "@/actions/updateEmployee";
-import { deleteEmployee } from "@/actions/deleteEmployee";
+import { addEmployee } from "@/actions/add-employee";
+import { updateEmployee } from "@/actions/update-employee";
+import { deleteEmployee } from "@/actions/delete-employee";
 
 import {
   Form,
@@ -36,7 +36,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Heading } from "@/components/ui/headings";
 import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { ImageUpload } from "@/components/ui/imageUpload";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 type EmployeeFormValue = z.infer<typeof EmployeeFormSchema>;
 
