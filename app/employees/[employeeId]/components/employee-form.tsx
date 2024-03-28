@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { CalendarIcon, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
+
 import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
@@ -80,7 +81,6 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
 
       if (!result) {
         toast({ description: "Something went wrong" });
-        return;
       }
 
       router.refresh();

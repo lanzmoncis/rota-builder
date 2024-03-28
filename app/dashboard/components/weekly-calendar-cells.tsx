@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";

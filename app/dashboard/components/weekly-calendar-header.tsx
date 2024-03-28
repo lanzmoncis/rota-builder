@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { startOfWeek, addDays, isSameDay, format } from "date-fns";
 
