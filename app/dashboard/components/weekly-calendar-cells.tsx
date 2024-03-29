@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
-import { Edit, Trash, CalendarPlus } from "lucide-react";
+import { Edit, Trash, CalendarPlus, Briefcase } from "lucide-react";
 
 import { deleteShift } from "@/actions/delete-shift";
 import { cn } from "@/lib/utils";
@@ -14,11 +14,16 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { EmployeeWithShift } from "@/lib/types";
+import { ContextMenuSeparator } from "@radix-ui/react-context-menu";
 
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
@@ -131,8 +136,8 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                         (shift) =>
                           format(new Date(shift.date), dateFormat) === date
                       )
-                        ? "Edit"
-                        : "Add"}
+                        ? "Edit shift"
+                        : "Add shift"}
                     </ContextMenuItem>
                     {employee.shifts.some(
                       (shift) =>
@@ -154,6 +159,27 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                         Delete
                       </ContextMenuItem>
                     ) : null}
+                    <ContextMenuSub>
+                      <ContextMenuSubTrigger>
+                        {" "}
+                        <Briefcase className="w-4 h-4 mr-2" />
+                        Time off
+                      </ContextMenuSubTrigger>
+                      <ContextMenuSubContent className="w-48">
+                        <ContextMenuItem>Personal</ContextMenuItem>
+                        <ContextMenuItem>Holiday</ContextMenuItem>
+                        <ContextMenuItem>Maternity</ContextMenuItem>
+                        <ContextMenuItem>Sick leave</ContextMenuItem>
+                      </ContextMenuSubContent>
+                    </ContextMenuSub>
+                    <ContextMenuSub>
+                      <ContextMenuSubTrigger className="ml-6">
+                        Other
+                      </ContextMenuSubTrigger>
+                      <ContextMenuSubContent className="w-48">
+                        <ContextMenuItem>On call</ContextMenuItem>
+                      </ContextMenuSubContent>
+                    </ContextMenuSub>
                   </ContextMenuContent>
                 </ContextMenu>
               </React.Fragment>
