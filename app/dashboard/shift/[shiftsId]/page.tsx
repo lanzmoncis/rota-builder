@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import ShiftsForm from "./components/shiftsForm";
+import ShiftsForm from "./components/shifts-form";
 
 const ShiftsPage = async ({ params }: { params: { shiftsId: string } }) => {
   const shift = await db.shift.findUnique({
