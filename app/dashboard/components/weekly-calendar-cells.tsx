@@ -25,6 +25,8 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
 
+import TimeOffMenuItem from "./time-off-menu";
+
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
   employees: EmployeeWithShift[];
@@ -48,6 +50,13 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
 
   const dateFormat = "EEE. MMM. dd, yyyy";
   const shiftDates: string[] = [];
+
+  const timeOffOptions = [
+    { label: "Personal", value: "Personal" },
+    { label: "Holiday", value: "Holiday" },
+    { label: "Maternity", value: "Maternity" },
+    { label: "Sick leave", value: "Sick leave" },
+  ];
 
   for (let i = 0; i < 7; i++) {
     const currentDate = addDays(startDate, i);
@@ -179,61 +188,45 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                         Delete
                       </ContextMenuItem>
                     ) : null}
-                    <ContextMenuSub>
-                      <ContextMenuSubTrigger>
-                        <Briefcase className="w-4 h-4 mr-2" />
-                        Time off
-                      </ContextMenuSubTrigger>
-                      <ContextMenuSubContent className="w-48 bg-green-300">
-                        <ContextMenuItem
-                          onClick={() => {
-                            const offDate = new Date(date);
-                            handleTimeOff("Personal", employee.id, offDate);
-                          }}
-                        >
-                          Personal
-                        </ContextMenuItem>
-                        <ContextMenuItem
-                          onClick={() => {
-                            const offDate = new Date(date);
-                            handleTimeOff("Holiday", employee.id, offDate);
-                          }}
-                        >
-                          Holiday
-                        </ContextMenuItem>
-                        <ContextMenuItem
-                          onClick={() => {
-                            const offDate = new Date(date);
-                            handleTimeOff("Maternity", employee.id, offDate);
-                          }}
-                        >
-                          Maternity
-                        </ContextMenuItem>
-                        <ContextMenuItem
-                          onClick={() => {
-                            const offDate = new Date(date);
-                            handleTimeOff("Sick leave", employee.id, offDate);
-                          }}
-                        >
-                          Sick leave
-                        </ContextMenuItem>
-                      </ContextMenuSubContent>
-                    </ContextMenuSub>
-                    <ContextMenuSub>
-                      <ContextMenuSubTrigger className="ml-6">
-                        Other
-                      </ContextMenuSubTrigger>
-                      <ContextMenuSubContent className="w-48 bg-green-300">
-                        <ContextMenuItem
-                          onClick={() => {
-                            const offDate = new Date(date);
-                            handleTimeOff("On call", employee.id, offDate);
-                          }}
-                        >
-                          On call
-                        </ContextMenuItem>
-                      </ContextMenuSubContent>
-                    </ContextMenuSub>
+                    {employee.shifts.some(
+                      (shift) =>
+                        format(new Date(shift.date), dateFormat) === date
+                    ) ? null : (
+                      <>
+                        <ContextMenuSub>
+                          <ContextMenuSubTrigger>
+                            <Briefcase className="w-4 h-4 mr-2" />
+                            Time off
+                          </ContextMenuSubTrigger>
+                          <ContextMenuSubContent className="w-48 bg-green-300">
+                            {timeOffOptions.map((option) => (
+                              <TimeOffMenuItem
+                                key={option.value}
+                                label={option.label}
+                                value={option.value}
+                                date={date}
+                                employeeId={employee.id}
+                                handleTimeOff={handleTimeOff}
+                              />
+                            ))}
+                          </ContextMenuSubContent>
+                        </ContextMenuSub>
+                        <ContextMenuSub>
+                          <ContextMenuSubTrigger className="ml-6">
+                            Other
+                          </ContextMenuSubTrigger>
+                          <ContextMenuSubContent className="w-48 bg-green-300">
+                            <TimeOffMenuItem
+                              label="On call"
+                              value="On call"
+                              date={date}
+                              employeeId={employee.id}
+                              handleTimeOff={handleTimeOff}
+                            />
+                          </ContextMenuSubContent>
+                        </ContextMenuSub>
+                      </>
+                    )}
                   </ContextMenuContent>
                 </ContextMenu>
               </React.Fragment>
