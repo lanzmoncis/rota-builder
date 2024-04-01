@@ -139,35 +139,41 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                     </div>
                   </ContextMenuTrigger>
                   <ContextMenuContent className="bg-green-300">
-                    <ContextMenuItem
-                      onClick={() => {
-                        setShiftDate(new Date(date));
-                        setEmployeeId(employee.id);
-                        const shift = employee.shifts.find(
+                    {employee.shifts.some(
+                      (shift) =>
+                        format(new Date(shift.date), dateFormat) === date &&
+                        shift.timeOff !== null
+                    ) ? null : (
+                      <ContextMenuItem
+                        onClick={() => {
+                          setShiftDate(new Date(date));
+                          setEmployeeId(employee.id);
+                          const shift = employee.shifts.find(
+                            (shift) =>
+                              format(new Date(shift.date), dateFormat) === date
+                          );
+                          const route = shift
+                            ? `/dashboard/shift/${shift.id}`
+                            : `/dashboard/shift/new`;
+                          router.push(route);
+                        }}
+                      >
+                        {employee.shifts.some(
                           (shift) =>
                             format(new Date(shift.date), dateFormat) === date
-                        );
-                        const route = shift
-                          ? `/dashboard/shift/${shift.id}`
-                          : `/dashboard/shift/new`;
-                        router.push(route);
-                      }}
-                    >
-                      {employee.shifts.some(
-                        (shift) =>
-                          format(new Date(shift.date), dateFormat) === date
-                      ) ? (
-                        <Edit className="w-4 h-4 mr-2" />
-                      ) : (
-                        <CalendarPlus className="w-4 h-4 mr-2" />
-                      )}
-                      {employee.shifts.some(
-                        (shift) =>
-                          format(new Date(shift.date), dateFormat) === date
-                      )
-                        ? "Edit shift"
-                        : "Add shift"}
-                    </ContextMenuItem>
+                        ) ? (
+                          <Edit className="w-4 h-4 mr-2" />
+                        ) : (
+                          <CalendarPlus className="w-4 h-4 mr-2" />
+                        )}
+                        {employee.shifts.some(
+                          (shift) =>
+                            format(new Date(shift.date), dateFormat) === date
+                        )
+                          ? "Edit shift"
+                          : "Add shift"}
+                      </ContextMenuItem>
+                    )}
                     {employee.shifts.some(
                       (shift) =>
                         format(new Date(shift.date), dateFormat) === date

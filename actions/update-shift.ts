@@ -36,7 +36,6 @@ export async function updateShift(values: AddShiftInputs, shiftId: string) {
       data: {
         department,
         shiftTime,
-        timeOff: "",
       },
     });
 
