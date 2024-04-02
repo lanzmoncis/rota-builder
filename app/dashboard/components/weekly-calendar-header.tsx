@@ -7,7 +7,9 @@ interface WeeklyCalendarHeaderProps {
   currentMonth: Date;
 }
 
-const WeeklyCalendarHeader = ({ currentMonth }: WeeklyCalendarHeaderProps) => {
+const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
+  currentMonth,
+}) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
   const dateFormat = "EEE. MMM. dd";
