@@ -30,8 +30,15 @@ export async function updateEmployee(
     };
   }
 
-  const { name, jobTitle, dateStarted, payrollId, hourlyRate, imageUrl } =
-    employeeDataValidation.data;
+  const {
+    name,
+    jobTitle,
+    dateStarted,
+    payrollId,
+    hourlyRate,
+    imageUrl,
+    email,
+  } = employeeDataValidation.data;
 
   try {
     const result = await db.employee.update({
@@ -41,6 +48,7 @@ export async function updateEmployee(
       data: {
         imageUrl,
         name,
+        email,
         jobTitle,
         dateStarted,
         payrollId,

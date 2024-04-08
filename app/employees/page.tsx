@@ -29,6 +29,7 @@ const EmployeesPage = async () => {
   const formattedEmployees: EmployeeColumn[] = employees.map((item) => ({
     id: item.id,
     name: item.name,
+    email: item.email,
     jobTitle: item.jobTitle,
     payrollId: item.payrollId,
     hourlyRate: item.hourlyRate,

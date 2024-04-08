@@ -16,6 +16,7 @@ model Employee {
   id          String    @id @default(cuid())
   userId      String
   name        String
+  email       String    @unique
   jobTitle    String
   dateStarted DateTime
   payrollId   String

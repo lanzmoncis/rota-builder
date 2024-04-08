@@ -4,6 +4,7 @@ export const EmployeeFormSchema = z.object({
   name: z.string().min(1, {
     message: "Name must be at least 1 character.",
   }),
+  email: z.string().email(),
   jobTitle: z.string().min(1, {
     message: "Job title must be at least 1 character",
   }),

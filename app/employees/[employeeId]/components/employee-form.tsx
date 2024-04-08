@@ -61,6 +61,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
     defaultValues: initialData || {
       imageUrl: "",
       name: "",
+      email: "",
       jobTitle: "",
       dateStarted: undefined,
       payrollId: "",
@@ -161,6 +162,19 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
                     <FormLabel>Full name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="email"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="grid grid-cols-[180px_1fr_1.2fr] gap-6 items-center space-y-0">
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

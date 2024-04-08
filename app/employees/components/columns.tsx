@@ -32,6 +32,10 @@ export const columns: ColumnDef<EmployeeColumn>[] = [
     header: "Name",
   },
   {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
     accessorKey: "payrollId",
     header: "Payroll ID",
   },
