@@ -28,7 +28,7 @@ import { addShift } from "@/actions/add-shift";
 import { updateShift } from "@/actions/update-shift";
 import { deleteShift } from "@/actions/delete-shift";
 
-import { ShiftFormSchema } from "@/lib/schema";
+import { ShiftFormSchema } from "@/schema/schema";
 
 import { useAddShiftStore } from "@/hooks/use-addShift-store";
 

@@ -1,22 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { startOfWeek, addDays, format } from "date-fns";
 import { useRouter } from "next/navigation";
-import { Edit, Trash, CalendarPlus, Briefcase } from "lucide-react";
+import { startOfWeek, addDays, format } from "date-fns";
+import { Briefcase } from "lucide-react";
 
 import { deleteShift } from "@/actions/delete-shift";
 import { AddTimeOff } from "@/actions/add-timeoff";
 
-import { cn } from "@/lib/utils";
-import { EmployeeWithShift } from "@/lib/types";
+import { timeOffOptions } from "@/constants/timeoff-options";
+import { dateFormatWithYear } from "@/constants/date-format";
 
-import { useAddShiftStore } from "@/hooks/use-addShift-store";
+import { cn } from "@/lib/utils";
+
+import { EmployeeWithShift } from "@/types/types";
 
 import {
   ContextMenu,
   ContextMenuContent,
-  ContextMenuItem,
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,
@@ -25,7 +26,10 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-import TimeOffMenuItem from "./time-off-menu";
+import { TimeOffMenuItem } from "./time-off-menu";
+import { MenuTrigger } from "./menu-trigger";
+import { AddEditMenu } from "./add-edit-menu";
+import { DeleteMenu } from "./delete-menu";
 
 interface WeeklyCalendarCellProps {
   currentMonth: Date;
@@ -42,25 +46,14 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   const [loading, setLoading] = useState(false);
   const [shiftId, setShiftId] = useState("");
 
-  const setShiftDate = useAddShiftStore((state) => state.setShiftDate);
-  const setEmployeeId = useAddShiftStore((state) => state.setEmployeeId);
-
   const router = useRouter();
   const { toast } = useToast();
 
-  const dateFormat = "EEE. MMM. dd, yyyy";
   const shiftDates: string[] = [];
-
-  const timeOffOptions = [
-    { label: "Personal", value: "Personal" },
-    { label: "Holiday", value: "Holiday" },
-    { label: "Maternity", value: "Maternity" },
-    { label: "Sick leave", value: "Sick leave" },
-  ];
 
   for (let i = 0; i < 7; i++) {
     const currentDate = addDays(startDate, i);
-    shiftDates.push(format(currentDate, dateFormat));
+    shiftDates.push(format(currentDate, dateFormatWithYear));
   }
 
   const handleTimeOff = async (
@@ -115,88 +108,32 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
               <React.Fragment key={i}>
                 <ContextMenu>
                   <ContextMenuTrigger>
-                    <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center">
-                      {employee.shifts
-                        .filter((shift) => {
-                          const formattedShiftDate = format(
-                            new Date(shift.date),
-                            dateFormat
-                          );
-                          return formattedShiftDate === date;
-                        })
-                        .map((shift) => (
-                          <div key={shift.id} className="text-center text-sm">
-                            {shift.timeOff ? (
-                              <div>{shift.timeOff}</div>
-                            ) : (
-                              <>
-                                <div>{shift.department}</div>
-                                <div>{shift.shiftTime}</div>
-                              </>
-                            )}
-                          </div>
-                        ))}
-                    </div>
+                    <MenuTrigger employee={employee} date={date} />
                   </ContextMenuTrigger>
                   <ContextMenuContent className="bg-green-300">
                     {employee.shifts.some(
                       (shift) =>
-                        format(new Date(shift.date), dateFormat) === date &&
-                        shift.timeOff !== null
+                        format(new Date(shift.date), dateFormatWithYear) ===
+                          date && shift.timeOff !== null
                     ) ? null : (
-                      <ContextMenuItem
-                        onClick={() => {
-                          setShiftDate(new Date(date));
-                          setEmployeeId(employee.id);
-                          const shift = employee.shifts.find(
-                            (shift) =>
-                              format(new Date(shift.date), dateFormat) === date
-                          );
-                          const route = shift
-                            ? `/dashboard/shift/${shift.id}`
-                            : `/dashboard/shift/new`;
-                          router.push(route);
-                        }}
-                      >
-                        {employee.shifts.some(
-                          (shift) =>
-                            format(new Date(shift.date), dateFormat) === date
-                        ) ? (
-                          <Edit className="w-4 h-4 mr-2" />
-                        ) : (
-                          <CalendarPlus className="w-4 h-4 mr-2" />
-                        )}
-                        {employee.shifts.some(
-                          (shift) =>
-                            format(new Date(shift.date), dateFormat) === date
-                        )
-                          ? "Edit shift"
-                          : "Add shift"}
-                      </ContextMenuItem>
+                      <AddEditMenu employee={employee} date={date} />
                     )}
                     {employee.shifts.some(
                       (shift) =>
-                        format(new Date(shift.date), dateFormat) === date
-                    ) ? (
-                      <ContextMenuItem
-                        onClick={() => {
-                          const shift = employee.shifts.find(
-                            (shift) =>
-                              format(new Date(shift.date), dateFormat) === date
-                          );
-                          if (shift) {
-                            setOpen(true);
-                            setShiftId(shift.id);
-                          }
-                        }}
-                      >
-                        <Trash className="w-4 h-4 mr-2" />
-                        Delete
-                      </ContextMenuItem>
-                    ) : null}
+                        format(new Date(shift.date), dateFormatWithYear) ===
+                        date
+                    ) && (
+                      <DeleteMenu
+                        employee={employee}
+                        date={date}
+                        setOpen={setOpen}
+                        setShiftId={setShiftId}
+                      />
+                    )}
                     {employee.shifts.some(
                       (shift) =>
-                        format(new Date(shift.date), dateFormat) === date
+                        format(new Date(shift.date), dateFormatWithYear) ===
+                        date
                     ) ? null : (
                       <>
                         <ContextMenuSub>

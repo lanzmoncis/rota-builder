@@ -11,7 +11,8 @@ import { useRouter } from "next/navigation";
 import { Employee } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
-import { EmployeeFormSchema } from "@/lib/schema";
+
+import { EmployeeFormSchema } from "@/schema/schema";
 
 import { addEmployee } from "@/actions/add-employee";
 import { updateEmployee } from "@/actions/update-employee";

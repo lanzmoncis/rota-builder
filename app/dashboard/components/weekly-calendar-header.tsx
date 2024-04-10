@@ -1,7 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { startOfWeek, addDays, isSameDay, format } from "date-fns";
+
+import { cn } from "@/lib/utils";
+
+import { dateFormatNoYear } from "@/constants/date-format";
 
 interface WeeklyCalendarHeaderProps {
   currentMonth: Date;
@@ -12,7 +15,6 @@ const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
 }) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
-  const dateFormat = "EEE. MMM. dd";
   const headerDates = [];
 
   for (let i = 0; i < 7; i++) {
@@ -25,7 +27,7 @@ const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
           isSameDay(currentDate, new Date()) && "bg-green-100"
         )}
       >
-        {format(currentDate, dateFormat)}
+        {format(currentDate, dateFormatNoYear)}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import { ContextMenuItem } from "@/components/ui/context-menu";
 
 interface TimeOffMenuItemProps {
@@ -11,7 +12,7 @@ interface TimeOffMenuItemProps {
   handleTimeOff: (value: string, employeeId: string, date: Date) => void;
 }
 
-const TimeOffMenuItem: React.FC<TimeOffMenuItemProps> = ({
+export const TimeOffMenuItem: React.FC<TimeOffMenuItemProps> = ({
   label,
   value,
   date,
@@ -29,5 +30,3 @@ const TimeOffMenuItem: React.FC<TimeOffMenuItemProps> = ({
     </ContextMenuItem>
   );
 };
-
-export default TimeOffMenuItem;

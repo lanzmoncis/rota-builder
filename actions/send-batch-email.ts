@@ -4,7 +4,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Resend } from "resend";
 import { redirect } from "next/navigation";
 
-import { EmployeeWithShift } from "@/lib/types";
+import { EmployeeWithShift } from "@/types/types";
 
 import { EmailTemplate } from "@/components/email-template";
 

@@ -1,7 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
-import { db } from "@/lib/db";
+import { db } from "@/db/db";
 
 import WeeklyCalendar from "../dashboard/components/weekly-calendar";
 

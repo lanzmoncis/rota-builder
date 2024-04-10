@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-import { db } from "@/lib/db";
+import { db } from "@/db/db";
 
 export async function AddTimeOff(
   value: string,

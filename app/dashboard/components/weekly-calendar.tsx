@@ -5,7 +5,7 @@ import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
 import { SendBatchEmail } from "@/actions/send-batch-email";
 
-import { EmployeeWithShift } from "@/lib/types";
+import { EmployeeWithShift } from "@/types/types";
 
 import WeeklyCalendarHeader from "./weekly-calendar-header";
 import WeeklyCalendarCells from "./weekly-calendar-cells";

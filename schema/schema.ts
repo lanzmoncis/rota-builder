@@ -1,5 +1,7 @@
 import * as z from "zod";
 
+// Zod schema form validation
+
 export const EmployeeFormSchema = z.object({
   name: z.string().min(1, {
     message: "Name must be at least 1 character.",

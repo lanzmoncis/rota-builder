@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { db } from "@/db/db";
 import ShiftsForm from "./components/shifts-form";
 
 const ShiftsPage = async ({ params }: { params: { shiftsId: string } }) => {

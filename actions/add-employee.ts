@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-import { EmployeeFormSchema } from "@/lib/schema";
-import { db } from "@/lib/db";
+import { EmployeeFormSchema } from "@/schema/schema";
+import { db } from "@/db/db";
 
 type EmployeeInputs = z.infer<typeof EmployeeFormSchema>;
 

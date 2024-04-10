@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-import { ShiftFormSchema } from "@/lib/schema";
-import { db } from "@/lib/db";
+import { ShiftFormSchema } from "@/schema/schema";
+import { db } from "@/db/db";
 
 type AddShiftInputs = z.infer<typeof ShiftFormSchema>;
 

@@ -1,6 +1,6 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
+import { db } from "@/db/db";
 
 import EmployeeForm from "./components/employee-form";
 

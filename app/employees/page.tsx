@@ -2,7 +2,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
 
-import { db } from "@/lib/db";
+import { db } from "@/db/db";
 import { EmployeesClient } from "./components/client";
 import { EmployeeColumn } from "./components/columns";
 
