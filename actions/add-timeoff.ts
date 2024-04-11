@@ -5,9 +5,10 @@ import { redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { db } from "@/db/db";
+import { TimeOffOption } from "@/types/types";
 
 export async function AddTimeOff(
-  value: string,
+  value: TimeOffOption,
   employeeId: string,
   date: Date
 ) {
@@ -22,8 +23,6 @@ export async function AddTimeOff(
     await db.shift.create({
       data: {
         date,
-        department: "",
-        shiftTime: "",
         timeOff: value,
         employeeId,
       },

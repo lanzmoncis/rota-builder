@@ -14,6 +14,7 @@ import { dateFormatWithYear } from "@/constants/date-format";
 import { cn } from "@/lib/utils";
 
 import { EmployeeWithShift } from "@/types/types";
+import { TimeOffOption } from "@/types/types";
 
 import {
   ContextMenu,
@@ -57,7 +58,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   }
 
   const handleTimeOff = async (
-    value: string,
+    value: TimeOffOption,
     employeeId: string,
     date: Date
   ) => {
@@ -161,7 +162,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                           <ContextMenuSubContent className="w-48 bg-green-300">
                             <TimeOffMenuItem
                               label="On call"
-                              value="On call"
+                              value={TimeOffOption.OnCall}
                               date={date}
                               employeeId={employee.id}
                               handleTimeOff={handleTimeOff}

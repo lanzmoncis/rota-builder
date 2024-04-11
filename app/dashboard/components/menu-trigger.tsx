@@ -28,7 +28,15 @@ export const MenuTrigger: React.FC<ContentMenuTriggerProps> = ({
         .map((shift) => (
           <div key={shift.id} className="text-center text-sm">
             {shift.timeOff ? (
-              <div>{shift.timeOff}</div>
+              <div>
+                {shift.timeOff === "SickLeave" ? (
+                  <div>Sick leave</div>
+                ) : shift.timeOff === "OnCall" ? (
+                  <div>On call</div>
+                ) : (
+                  <div>{shift.timeOff}</div>
+                )}
+              </div>
             ) : (
               <>
                 <div>{shift.department}</div>

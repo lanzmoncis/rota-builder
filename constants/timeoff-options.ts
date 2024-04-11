@@ -1,8 +1,10 @@
 // time-off options
 
+import { TimeOffOption } from "@/types/types";
+
 export const timeOffOptions = [
-  { label: "Personal", value: "Personal" },
-  { label: "Holiday", value: "Holiday" },
-  { label: "Maternity", value: "Maternity" },
-  { label: "Sick leave", value: "Sick leave" },
+  { label: "Personal", value: TimeOffOption.Personal },
+  { label: "Holiday", value: TimeOffOption.Holiday },
+  { label: "Maternity", value: TimeOffOption.Maternity },
+  { label: "Sick leave", value: TimeOffOption.SickLeave },
 ];

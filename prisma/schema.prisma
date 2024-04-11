@@ -12,6 +12,14 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum timeOff {
+  Personal
+  Holiday
+  Maternity
+  SickLeave
+  OnCall
+}
+
 model Employee {
   id          String    @id @default(cuid())
   userId      String
@@ -32,9 +40,9 @@ model Shift {
   employeeId  String
   employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   date        DateTime
-  department  String
-  shiftTime   String
-  timeOff     String?
+  department  String?
+  shiftTime   String?
+  timeOff     timeOff?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
