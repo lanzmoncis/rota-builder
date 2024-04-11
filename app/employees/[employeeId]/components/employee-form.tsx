@@ -73,16 +73,11 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
   const handleSubmit = async (values: EmployeeFormValue) => {
     try {
       setLoading(true);
-      let result;
 
       if (initialData) {
-        result = await updateEmployee(values, initialData.id);
+        await updateEmployee(values, initialData.id);
       } else {
-        result = await addEmployee(values);
-      }
-
-      if (!result) {
-        toast({ description: "Something went wrong" });
+        await addEmployee(values);
       }
 
       router.refresh();

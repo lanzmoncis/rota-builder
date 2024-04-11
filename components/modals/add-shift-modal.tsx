@@ -65,17 +65,11 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
   const handleSubmit = async (values: z.infer<typeof ShiftFormSchema>) => {
     try {
       setLoading(true);
-      let result;
-      if (initialData) {
-        result = await updateShift(values, initialData.id);
-      } else {
-        result = await addShift(values, employeeId, shiftDate);
-      }
 
-      if (!result) {
-        toast({
-          description: "Something went wrong",
-        });
+      if (initialData) {
+        await updateShift(values, initialData.id);
+      } else {
+        await addShift(values, employeeId, shiftDate);
       }
 
       router.refresh();
@@ -83,7 +77,6 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
         description: `${toastDescription}`,
       });
     } catch (error) {
-      console.log(error);
       toast({ description: "Something went wrong" });
     } finally {
       setLoading(false);

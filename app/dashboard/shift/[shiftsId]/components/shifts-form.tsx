@@ -61,17 +61,11 @@ const ShiftsForm: React.FC<ShiftsFormProps> = ({ initialData }) => {
   const handleSubmit = async (values: z.infer<typeof ShiftFormSchema>) => {
     try {
       setLoading(true);
-      let result;
-      if (initialData) {
-        result = await updateShift(values, initialData.id);
-      } else {
-        result = await addShift(values, employeeId, shiftDate);
-      }
 
-      if (!result) {
-        toast({
-          description: "Something went wrong",
-        });
+      if (initialData) {
+        await updateShift(values, initialData.id);
+      } else {
+        await addShift(values, employeeId, shiftDate);
       }
 
       router.refresh();
