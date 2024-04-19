@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
-
 import { ChevronLeft, ChevronRight, Plus, RotateCcw } from "lucide-react";
 
 import { SendBatchEmail } from "@/actions/send-batch-email";
