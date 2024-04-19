@@ -3,22 +3,16 @@
 import { useState } from "react";
 import { format, getWeek, addWeeks, subWeeks } from "date-fns";
 
+import { ChevronLeft, ChevronRight, Plus, RotateCcw } from "lucide-react";
+
 import { SendBatchEmail } from "@/actions/send-batch-email";
 
 import { EmployeeWithShift } from "@/types/types";
 
+import { Button } from "@/components/ui/button";
+
 import WeeklyCalendarHeader from "./weekly-calendar-header";
 import WeeklyCalendarCells from "./weekly-calendar-cells";
-
-import { Button } from "@/components/ui/button";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Plus,
-  RotateCcw,
-  Share,
-} from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 interface WeeklyCalendarProps {
   employees: EmployeeWithShift[];
