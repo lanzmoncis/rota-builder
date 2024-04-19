@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { startOfWeek, addDays, format } from "date-fns";
 import { Briefcase } from "lucide-react";
+
+import { Shift } from "@prisma/client";
 
 import { deleteShift } from "@/actions/delete-shift";
 import { AddTimeOff } from "@/actions/add-timeoff";
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/context-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { AddShiftModal } from "@/components/modals/add-shift-modal";
 
 import { TimeOffMenuItem } from "./time-off-menu";
 import { MenuTrigger } from "./menu-trigger";
@@ -44,14 +46,14 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
   const [open, setOpen] = useState(false);
+  const [isFormModal, setIsFormModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [shiftId, setShiftId] = useState("");
+  const [shift, setShift] = useState<Shift | null>(null);
 
-  const router = useRouter();
   const { toast } = useToast();
 
   const shiftDates: string[] = [];
-
   for (let i = 0; i < 7; i++) {
     const currentDate = addDays(startDate, i);
     shiftDates.push(format(currentDate, dateFormatWithYear));
@@ -64,7 +66,6 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   ) => {
     try {
       await AddTimeOff(value, employeeId, date);
-      router.refresh();
       toast({ description: "Add time off" });
     } catch (error) {
       toast({ description: "Something went wrong" });
@@ -75,7 +76,6 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
     try {
       setLoading(true);
       await deleteShift(shiftId);
-      router.refresh();
       toast({ description: "Shift deleted" });
     } catch (error) {
       toast({ description: "Something went wrong" });
@@ -94,12 +94,18 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
         onConfirm={() => onDelete(shiftId)}
         loading={loading}
       />
-      <div className="border-slate-400 border-t border-l bg-white">
+      <AddShiftModal
+        isFormModal={isFormModal}
+        setIsFormModal={setIsFormModal}
+        shift={shift}
+        setShift={setShift}
+      />
+      <div className="border-slate-300 border-t border-l bg-white">
         {employees.map((employee: EmployeeWithShift, index: number) => (
           <div className="grid grid-cols-8" key={employee.id}>
             <div
               className={cn(
-                "h-20 flex justify-center items-center border-r border-b  border-slate-400 text-sm",
+                "flex justify-end px-6 items-center border-r border-b  border-slate-300 text-[13px] leading-4",
                 index % 2 === 0 ? "bg-green-300" : "bg-green-200"
               )}
             >
@@ -117,7 +123,12 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                         format(new Date(shift.date), dateFormatWithYear) ===
                           date && shift.timeOff !== null
                     ) ? null : (
-                      <AddEditMenu employee={employee} date={date} />
+                      <AddEditMenu
+                        employee={employee}
+                        date={date}
+                        setIsFormModal={setIsFormModal}
+                        setShift={setShift}
+                      />
                     )}
                     {employee.shifts.some(
                       (shift) =>
@@ -138,8 +149,11 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                     ) ? null : (
                       <>
                         <ContextMenuSub>
-                          <ContextMenuSubTrigger>
-                            <Briefcase className="w-4 h-4 mr-2" />
+                          <ContextMenuSubTrigger className=" text-gray-700 text-[13.5px] leading-4">
+                            <Briefcase
+                              className="w-4 h-4 mr-2"
+                              color={"#374151"}
+                            />
                             Time off
                           </ContextMenuSubTrigger>
                           <ContextMenuSubContent className="w-48 bg-green-300">
@@ -156,7 +170,7 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
                           </ContextMenuSubContent>
                         </ContextMenuSub>
                         <ContextMenuSub>
-                          <ContextMenuSubTrigger className="ml-6">
+                          <ContextMenuSubTrigger className="ml-6 text-gray-700 text-[13.5px] leading-4">
                             Other
                           </ContextMenuSubTrigger>
                           <ContextMenuSubContent className="w-48 bg-green-300">

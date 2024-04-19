@@ -260,7 +260,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ initialData }) => {
               />
             </div>
             <div className="flex gap-2 justify-end mt-2">
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" className="bg-green-500" disabled={loading}>
                 {actions}
               </Button>
             </div>

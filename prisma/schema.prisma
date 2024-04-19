@@ -40,8 +40,8 @@ model Shift {
   employeeId  String
   employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   date        DateTime
-  department  String?
-  shiftTime   String?
+  department  String
+  shiftTime   String
   timeOff     timeOff?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

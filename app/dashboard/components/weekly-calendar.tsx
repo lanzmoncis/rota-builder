@@ -11,6 +11,14 @@ import WeeklyCalendarHeader from "./weekly-calendar-header";
 import WeeklyCalendarCells from "./weekly-calendar-cells";
 
 import { Button } from "@/components/ui/button";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  RotateCcw,
+  Share,
+} from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 interface WeeklyCalendarProps {
   employees: EmployeeWithShift[];
@@ -41,36 +49,43 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
   };
 
   return (
-    <div className="p-8 text-gray-700">
-      <div className="flex justify-between">
-        <div className="text-xl text-black">
+    <div className=" text-gray-700 flex flex-col px-4">
+      <div className="flex items-center gap-4 pt-2">
+        <div className="text-[16px] leading-4 text-gray-700">
           {format(new Date(), "MMMM d yyyy")}
         </div>
-        <div className="flex gap-2 mb-10 text-sm bg-white py-1 px-1 rounded-sm shadow-sm">
+        <div className="flex items-center gap-2">
           <Button
-            size="sm"
+            size="icon"
+            variant="ghost"
             onClick={goToToday}
-            className="bg-green-400 hover:bg-green-500 duration-200 py-1 px-2 rounded-sm text-white"
+            className="w-6"
           >
-            Today
+            <RotateCcw strokeWidth={1.5} size={18} />
           </Button>
           <Button
-            size="sm"
+            variant="ghost"
+            size="icon"
             onClick={() => changeWeekHandle("prev")}
-            className="bg-green-400 hover:bg-green-500 py-1 px-2 rounded-sm duration-200 text-white"
+            className="w-6"
           >
-            Previous week
+            <ChevronLeft strokeWidth={1.25} size={24} />
           </Button>
           <Button
-            size="sm"
+            size="icon"
             onClick={() => changeWeekHandle("next")}
-            className="bg-green-400 hover:bg-green-500 py-1 px-2 rounded-sm duration-200 text-white"
+            variant="ghost"
+            className="w-6"
           >
-            Next week
+            <ChevronRight strokeWidth={1.25} size={24} />
+          </Button>
+          <Button variant="outline" className="h-[30px] px-2">
+            <Plus className="mr-1" strokeWidth={1.75} size={16} />
+            <span className="text-xs leading-4 text-gray-700">Publish</span>
           </Button>
         </div>
       </div>
-      <div className="px-10 pt-5 pb-10 bg-white shadow-sm rounded-md">
+      <div className="p-8">
         <WeeklyCalendarHeader currentMonth={currentMonth} />
         <WeeklyCalendarCells
           currentMonth={currentMonth}

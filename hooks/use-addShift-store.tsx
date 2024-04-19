@@ -8,14 +8,9 @@ interface useAddShiftStoreTypes {
   setEmployeeId: (id: string) => void;
 }
 
-export const useAddShiftStore = create<useAddShiftStoreTypes>()(
-  persist(
-    (set) => ({
-      shiftDate: new Date(),
-      setShiftDate: (date: Date) => set({ shiftDate: date }),
-      employeeId: "",
-      setEmployeeId: (id: string) => set({ employeeId: id }),
-    }),
-    { name: "shift-store" }
-  )
-);
+export const useAddShiftStore = create<useAddShiftStoreTypes>((set) => ({
+  shiftDate: new Date(),
+  setShiftDate: (date: Date) => set({ shiftDate: date }),
+  employeeId: "",
+  setEmployeeId: (id: string) => set({ employeeId: id }),
+}));

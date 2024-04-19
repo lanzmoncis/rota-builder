@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 
 import "./globals.css";
 
@@ -7,7 +7,12 @@ import Sidebar from "@/components/navigation/sidebar";
 import Header from "@/components/ui/header";
 import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({ subsets: ["latin"] });
+import { cn } from "@/lib/utils";
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Shifty",
@@ -21,11 +26,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
         <div className="min-h-screen grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
           <Sidebar />
           <Header />
-          <main className="bg-gray-50">{children}</main>
+          <main>{children}</main>
           <Toaster />
         </div>
       </body>

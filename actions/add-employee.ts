@@ -39,7 +39,7 @@ export async function addEmployee(values: EmployeeInputs) {
   } = employeeDataValidation.data;
 
   try {
-    const result = await db.employee.create({
+    await db.employee.create({
       data: {
         imageUrl,
         name,
@@ -53,7 +53,6 @@ export async function addEmployee(values: EmployeeInputs) {
     });
 
     revalidatePath("/employees");
-    return result;
   } catch (error) {
     return {
       message: "Database Error: Failed to add employee.",

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Home, Users } from "lucide-react";
+import { Calendar, Users, Store } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -13,8 +13,8 @@ const MainNav = () => {
   const routes = [
     {
       href: "/dashboard",
-      name: "Home",
-      icon: Home,
+      name: "Timesheets",
+      icon: Calendar,
     },
     {
       href: "/employees",
@@ -25,7 +25,7 @@ const MainNav = () => {
 
   return (
     <nav>
-      <ul className="flex flex-col gap-3 text-gray-700">
+      <ul className="flex flex-col gap-2 text-gray-700">
         {routes.map((route, index) => {
           const isActive = pathName === route.href;
           const Icon = route.icon;
@@ -36,15 +36,16 @@ const MainNav = () => {
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "text-sm hover:bg-gray-100 hover:text-gray-800 duration-200 font-medium flex items-center gap-3 py-3 px-6",
-                  isActive ? "bg-gray-100 text-gray-800" : ""
+                  " hover:bg-gray-100 duration-200 flex items-center gap-3 py-[10px] px-4 rounded-sm",
+                  isActive ? "bg-gray-100 text-black" : ""
                 )}
               >
                 <Icon
-                  className="w-5 h-5"
+                  className="size-4"
                   color={isActive ? "#15803d" : "#64748b"}
+                  strokeWidth={1.75}
                 />
-                <span>{route.name}</span>
+                <span className="text-[13.5px] leading-4">{route.name}</span>
               </Link>
             </li>
           );

@@ -23,7 +23,7 @@ const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
       <div
         key={i}
         className={cn(
-          "text-sm w-full h-full flex items-center justify-center",
+          "text-[12.5px] leading-4 w-full h-full flex items-center justify-center",
           isSameDay(currentDate, new Date()) && "bg-green-100"
         )}
       >
@@ -33,7 +33,7 @@ const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
   }
 
   return (
-    <div className="grid grid-cols-8 justify-items-center items-center h-20">
+    <div className="grid grid-cols-8 justify-items-center items-center h-14">
       <div className="text-gray-50"></div>
       {headerDates}
     </div>

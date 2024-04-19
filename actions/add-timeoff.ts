@@ -22,6 +22,8 @@ export async function AddTimeOff(
   try {
     await db.shift.create({
       data: {
+        shiftTime: "N/A",
+        department: "N/A",
         date,
         timeOff: value,
         employeeId,

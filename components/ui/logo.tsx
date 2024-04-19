@@ -1,18 +1,17 @@
 "use client";
 
+import { MoreHorizontal } from "lucide-react";
 import React from "react";
-import Image from "next/image";
 
-interface LogoProps {
-  width?: number;
-  height?: number;
-}
-
-const Logo: React.FC<LogoProps> = ({ width = 112, height = 80 }) => {
-  const src = "/shifty-logo.png";
+const Logo: React.FC = () => {
   return (
-    <div className="flex justify-center items-center max-h-20 relative">
-      <Image src={src} alt="logo" width={width} height={height} />
+    <div className=" flex justify-between items-center px-2">
+      <span className="font-bold text-xl text-gray-700 tracking-tight">
+        Shifty
+      </span>
+      <div>
+        <MoreHorizontal size={20} strokeWidth={1.5} color={"#64748b"} />
+      </div>
     </div>
   );
 };

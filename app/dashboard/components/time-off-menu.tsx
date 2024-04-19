@@ -3,6 +3,7 @@
 import React from "react";
 
 import { ContextMenuItem } from "@/components/ui/context-menu";
+
 import { TimeOffOption } from "@/types/types";
 
 interface TimeOffMenuItemProps {
@@ -26,6 +27,7 @@ export const TimeOffMenuItem: React.FC<TimeOffMenuItemProps> = ({
         const offDate = new Date(date);
         handleTimeOff(value, employeeId, offDate);
       }}
+      className="text-gray-700 text-[13.5px] leading-4"
     >
       {label}
     </ContextMenuItem>

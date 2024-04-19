@@ -1,8 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { useState } from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
@@ -30,33 +29,31 @@ import { ShiftFormSchema } from "@/schema/schema";
 import { useAddShiftStore } from "@/hooks/use-addShift-store";
 
 interface AddShiftModalProps {
-  initialData: Shift | null;
+  isFormModal: boolean;
+  shift: Shift | null;
+  setIsFormModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShift: React.Dispatch<React.SetStateAction<Shift | null>>;
 }
 
-const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
+export const AddShiftModal: React.FC<AddShiftModalProps> = ({
+  isFormModal,
+  setIsFormModal,
+  shift,
+  setShift,
+}) => {
   const [loading, setLoading] = useState(false);
-
-  const pathname = usePathname();
-  const params = useParams();
-  const router = useRouter();
 
   const shiftDate = useAddShiftStore((state) => state.shiftDate);
   const employeeId = useAddShiftStore((state) => state.employeeId);
   const setEmployeeId = useAddShiftStore((state) => state.setEmployeeId);
 
-  const title = initialData ? "Edit shift" : "Add shift";
-  const actions = initialData ? "Save changes" : "Create shift";
-  const toastDescription = initialData ? "Shift updated" : "Shift added";
-
-  const isFormModal =
-    pathname === `/dashboard/shift/${params.shiftsId}` ||
-    pathname === `/dashboard/shift/new`;
-
-  const onClose = () => router.back();
+  const title = shift ? "Edit shift" : "Add shift";
+  const actions = shift ? "Save changes" : "Create shift";
+  const toastDescription = shift ? "Shift updated" : "Shift added";
 
   const form = useForm<z.infer<typeof ShiftFormSchema>>({
     resolver: zodResolver(ShiftFormSchema),
-    defaultValues: initialData || {
+    defaultValues: {
       department: "",
       shiftTime: "",
     },
@@ -65,14 +62,14 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
   const handleSubmit = async (values: z.infer<typeof ShiftFormSchema>) => {
     try {
       setLoading(true);
-
-      if (initialData) {
-        await updateShift(values, initialData.id);
+      if (shift) {
+        await updateShift(values, shift.id);
+        form.reset();
       } else {
         await addShift(values, employeeId, shiftDate);
+        form.reset();
       }
 
-      router.refresh();
       toast({
         description: `${toastDescription}`,
       });
@@ -81,8 +78,14 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
     } finally {
       setLoading(false);
       setEmployeeId("");
-      onClose();
+      setShift(null);
+      setIsFormModal(false);
     }
+  };
+
+  const handleClose = () => {
+    setShift(null);
+    setIsFormModal(false);
   };
 
   return (
@@ -90,11 +93,11 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
       title={title}
       description="Create shift to employee"
       isOpen={isFormModal}
-      onClose={onClose}
+      onClose={handleClose}
     >
       <Separator />
       <div className="py-4 mb-1">
-        <p className="text-sm">
+        <p className="text-sm text-gray-700">
           <span>{format(shiftDate, "EEEE MMMM dd, yyyy")}</span>
         </p>
       </div>
@@ -139,7 +142,11 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
             />
           </div>
           <div className="items-center justify-end w-full pt-6 space-x-2">
-            <Button disabled={loading} type="submit">
+            <Button
+              disabled={loading}
+              type="submit"
+              className="bg-green-500 text-[13.5px] leading-4"
+            >
               {actions}
             </Button>
           </div>
@@ -148,5 +155,3 @@ const AddShiftModal: React.FC<AddShiftModalProps> = ({ initialData }) => {
     </Modal>
   );
 };
-
-export default AddShiftModal;

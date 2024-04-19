@@ -1,7 +1,6 @@
 "use client";
 
 import { format } from "date-fns";
-
 import { Trash } from "lucide-react";
 
 import { dateFormatWithYear } from "@/constants/date-format";
@@ -13,8 +12,8 @@ import { ContextMenuItem } from "@/components/ui/context-menu";
 interface DeleteMenuProps {
   employee: EmployeeWithShift;
   date: String;
-  setOpen: (value: boolean | ((prevValue: boolean) => boolean)) => void;
-  setShiftId: (value: string | ((prevValue: string) => string)) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setShiftId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const DeleteMenu: React.FC<DeleteMenuProps> = ({
@@ -34,8 +33,11 @@ export const DeleteMenu: React.FC<DeleteMenuProps> = ({
   };
 
   return (
-    <ContextMenuItem onClick={handleClick}>
-      <Trash className="w-4 h-4 mr-2" />
+    <ContextMenuItem
+      onClick={handleClick}
+      className="text-gray-700 text-[13.5px] leading-4"
+    >
+      <Trash className="w-4 h-4 mr-2" color={"#374151"} />
       Delete
     </ContextMenuItem>
   );

@@ -19,7 +19,7 @@ export const EmployeeAvatar: React.FC<EmployeeAvatarProps> = ({
   };
 
   return (
-    <div className="pl-4 w-4">
+    <div className=" w-4">
       <Avatar>
         <AvatarImage src={imageUrl} />
         <AvatarFallback className="bg-green-400">

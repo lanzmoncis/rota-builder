@@ -16,7 +16,7 @@ export const MenuTrigger: React.FC<ContentMenuTriggerProps> = ({
   date,
 }) => {
   return (
-    <div className="h-20 border-r border-b border-slate-400 flex justify-center items-center">
+    <div className="h-20 border-r border-b border-slate-300 flex justify-center items-center">
       {employee.shifts
         .filter((shift) => {
           const formattedShiftDate = format(
@@ -26,7 +26,7 @@ export const MenuTrigger: React.FC<ContentMenuTriggerProps> = ({
           return formattedShiftDate === date;
         })
         .map((shift) => (
-          <div key={shift.id} className="text-center text-sm">
+          <div key={shift.id} className="text-center text-[13px] leading-4">
             {shift.timeOff ? (
               <div>
                 {shift.timeOff === "SickLeave" ? (

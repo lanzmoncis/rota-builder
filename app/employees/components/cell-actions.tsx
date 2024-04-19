@@ -60,15 +60,21 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel className="text-gray-700">
+            Actions
+          </DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() => router.push(`/employees/${data.id}`)}
+            className="text-gray-700"
           >
-            <Edit className="w-4 h-4 mr-2" />
+            <Edit className="w-4 h-4 mr-2" color={"#64748b"} />
             Update
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="w-4 h-4 mr-2" />
+          <DropdownMenuItem
+            onClick={() => setOpen(true)}
+            className="text-gray-700"
+          >
+            <Trash className="w-4 h-4 mr-2" color={"#64748b"} />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

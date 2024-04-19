@@ -32,7 +32,7 @@ export async function addShift(
 
   const { department, shiftTime } = addShiftDataValidation.data;
   try {
-    const result = await db.shift.create({
+    await db.shift.create({
       data: {
         department,
         shiftTime,
@@ -42,8 +42,8 @@ export async function addShift(
     });
 
     revalidatePath("/dashboard");
-    return result;
   } catch (error) {
+    console.log(error);
     return {
       message: "Database Error: Failed to add shift.",
     };

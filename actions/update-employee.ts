@@ -41,7 +41,7 @@ export async function updateEmployee(
   } = employeeDataValidation.data;
 
   try {
-    const result = await db.employee.update({
+    await db.employee.update({
       where: {
         id: employeeId,
       },
@@ -57,7 +57,6 @@ export async function updateEmployee(
     });
 
     revalidatePath("/employees");
-    return result;
   } catch (error) {
     return {
       message: "Database Error: Failed to update employee.",
