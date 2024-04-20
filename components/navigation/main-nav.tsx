@@ -3,25 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Calendar, Users, Store } from "lucide-react";
+import { routes } from "@/constants/routes";
 
 import { cn } from "@/lib/utils";
 
 const MainNav = () => {
   const pathName = usePathname();
-
-  const routes = [
-    {
-      href: "/dashboard",
-      name: "Timesheets",
-      icon: Calendar,
-    },
-    {
-      href: "/employees",
-      name: "Employees",
-      icon: Users,
-    },
-  ];
 
   return (
     <nav>

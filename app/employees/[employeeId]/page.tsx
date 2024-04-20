@@ -19,7 +19,7 @@ const EmployeePage = async ({ params }: { params: { employeeId: string } }) => {
     },
   });
   return (
-    <div className="space-y-4 p-8">
+    <div className="space-y-4 p-8 pt-6">
       <EmployeeForm initialData={employee} />
     </div>
   );

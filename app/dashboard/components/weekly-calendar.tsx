@@ -8,10 +8,16 @@ import { SendBatchEmail } from "@/actions/send-batch-email";
 
 import { EmployeeWithShift } from "@/types/types";
 
-import { Button } from "@/components/ui/button";
-
 import WeeklyCalendarHeader from "./weekly-calendar-header";
 import WeeklyCalendarCells from "./weekly-calendar-cells";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 
 interface WeeklyCalendarProps {
   employees: EmployeeWithShift[];
@@ -20,6 +26,7 @@ interface WeeklyCalendarProps {
 const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleSendEmails = async () => {
     await SendBatchEmail({ employees });
@@ -29,24 +36,49 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
     if (btnType === "prev") {
       setCurrentMonth(subWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(subWeeks(currentMonth, 1)));
+      setSelectedDate(new Date());
     }
     if (btnType === "next") {
       setCurrentMonth(addWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(addWeeks(currentMonth, 1)));
+      setSelectedDate(new Date());
     }
   };
 
   const goToToday = () => {
     setCurrentMonth(new Date());
     setCurrentWeek(getWeek(new Date()));
+    setSelectedDate(new Date());
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setSelectedDate(date);
+      setCurrentMonth(new Date(date));
+      setCurrentWeek(getWeek(date));
+    }
   };
 
   return (
     <div className=" text-gray-700 flex flex-col px-4">
       <div className="flex items-center gap-4 pt-2">
-        <div className="text-[16px] leading-4 text-gray-700">
-          {format(new Date(), "MMMM d yyyy")}
-        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant={"ghost"} size="sm">
+              <span className="text-[16px] leading-4 text-gray-700 font-medium">
+                {format(new Date(), "MMMM d yyyy")}
+              </span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={handleDateSelect}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
         <div className="flex items-center gap-2">
           <Button
             size="icon"
@@ -54,7 +86,7 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
             onClick={goToToday}
             className="w-6"
           >
-            <RotateCcw strokeWidth={1.5} size={18} />
+            <RotateCcw strokeWidth={1.75} size={18} />
           </Button>
           <Button
             variant="ghost"
