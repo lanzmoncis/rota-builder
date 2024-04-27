@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { EmployeeWithShift } from "@/types/types";
 
 import { dateFormatWithYear } from "@/constants/date-format";
+import { cn } from "@/lib/utils";
 
 interface ContentMenuTriggerProps {
   employee: EmployeeWithShift;
@@ -26,7 +27,13 @@ export const MenuTrigger: React.FC<ContentMenuTriggerProps> = ({
           return formattedShiftDate === date;
         })
         .map((shift) => (
-          <div key={shift.id} className="text-center text-[13px] leading-4">
+          <div
+            key={shift.id}
+            className={cn(
+              "flex flex-col items-center justify-center text-[13px] leading-4",
+              shift.timeOff === "OnCall" ? "bg-yellow-50 w-full h-full" : ""
+            )}
+          >
             {shift.timeOff ? (
               <div>
                 {shift.timeOff === "SickLeave" ? (
