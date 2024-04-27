@@ -1,23 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { format, getWeek, addWeeks, subWeeks } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, RotateCcw } from "lucide-react";
+import { getWeek, addWeeks, subWeeks } from "date-fns";
 
 import { SendBatchEmail } from "@/actions/send-batch-email";
 
 import { EmployeeWithShift } from "@/types/types";
 
-import WeeklyCalendarHeader from "./weekly-calendar-header";
-import WeeklyCalendarCells from "./weekly-calendar-cells";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { WeeklyCalendarHeader } from "./weekly-calendar-header";
+import { WeeklyCalendarCells } from "./weekly-calendar-cells";
+import { WeeklyCalendarMenu } from "./weekly-calendar-menu";
 
 interface WeeklyCalendarProps {
   employees: EmployeeWithShift[];
@@ -61,55 +53,12 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
 
   return (
     <div className=" text-gray-700 flex flex-col px-4">
-      <div className="flex items-center gap-4 pt-2">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant={"ghost"} size="sm">
-              <span className="text-[16px] leading-4 text-gray-700 font-medium">
-                {format(new Date(), "MMMM d yyyy")}
-              </span>
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={handleDateSelect}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-        <div className="flex items-center gap-2">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={goToToday}
-            className="w-6"
-          >
-            <RotateCcw strokeWidth={1.75} size={18} />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => changeWeekHandle("prev")}
-            className="w-6"
-          >
-            <ChevronLeft strokeWidth={1.25} size={24} />
-          </Button>
-          <Button
-            size="icon"
-            onClick={() => changeWeekHandle("next")}
-            variant="ghost"
-            className="w-6"
-          >
-            <ChevronRight strokeWidth={1.25} size={24} />
-          </Button>
-          <Button variant="outline" className="h-[30px] px-2">
-            <Plus className="mr-1" strokeWidth={1.75} size={16} />
-            <span className="text-xs leading-4 text-gray-700">Publish</span>
-          </Button>
-        </div>
-      </div>
+      <WeeklyCalendarMenu
+        selectedDate={selectedDate}
+        handleDateSelect={handleDateSelect}
+        goToToday={goToToday}
+        changeWeekHandle={changeWeekHandle}
+      />
       <div className="p-8">
         <WeeklyCalendarHeader currentMonth={currentMonth} />
         <WeeklyCalendarCells

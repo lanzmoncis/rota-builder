@@ -27,7 +27,7 @@ const Header = () => {
       <div className="bg-white w-5/6 text-center rounded-sm shadow-sm flex justify-center items-center gap-2">
         {routes.map(
           (route, index) =>
-            pathName === route.href.substring(1) && (
+            pathName.startsWith(route.href.substring(1)) && (
               <div key={index} className="flex items-center gap-2">
                 {route.icon === Calendar && (
                   <Calendar size={16} strokeWidth={1.75} color={"#15803d"} />

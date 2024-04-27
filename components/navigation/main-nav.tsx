@@ -14,7 +14,7 @@ const MainNav = () => {
     <nav>
       <ul className="flex flex-col gap-2 text-gray-700">
         {routes.map((route, index) => {
-          const isActive = pathName === route.href;
+          const isActive = pathName.startsWith(route.href);
           const Icon = route.icon;
 
           return (

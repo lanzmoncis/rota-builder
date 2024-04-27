@@ -39,7 +39,7 @@ interface WeeklyCalendarCellProps {
   employees: EmployeeWithShift[];
 }
 
-const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
+export const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
   currentMonth,
   employees,
 }) => {
@@ -195,5 +195,3 @@ const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
     </>
   );
 };
-
-export default WeeklyCalendarCells;

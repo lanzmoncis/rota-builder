@@ -10,7 +10,7 @@ interface WeeklyCalendarHeaderProps {
   currentMonth: Date;
 }
 
-const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
+export const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
   currentMonth,
 }) => {
   let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
@@ -39,5 +39,3 @@ const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
     </div>
   );
 };
-
-export default WeeklyCalendarHeader;
