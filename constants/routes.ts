@@ -2,8 +2,8 @@ import { Calendar, Users } from "lucide-react";
 
 export const routes = [
   {
-    href: "/dashboard",
-    name: "Timesheets",
+    href: "/rota",
+    name: "Rota",
     icon: Calendar,
   },
   {

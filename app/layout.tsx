@@ -3,10 +3,6 @@ import { Inter as FontSans } from "next/font/google";
 
 import "./globals.css";
 
-import Sidebar from "@/components/navigation/sidebar";
-import Header from "@/components/ui/header";
-import { Toaster } from "@/components/ui/toaster";
-
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -32,11 +28,8 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <div className="min-h-screen grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
-          <Sidebar />
-          <Header />
+        <div>
           <main>{children}</main>
-          <Toaster />
         </div>
       </body>
     </html>

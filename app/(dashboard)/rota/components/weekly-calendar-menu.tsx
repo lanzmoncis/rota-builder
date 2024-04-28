@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw, Send } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -64,7 +64,7 @@ export const WeeklyCalendarMenu: React.FC<WeeklyCalendarMenuProps> = ({
           <ChevronRight strokeWidth={1.25} size={24} />
         </Button>
         <Button variant="outline" className="h-[30px] px-2">
-          <Plus className="mr-1" strokeWidth={1.75} size={16} />
+          <Send className="mr-1" strokeWidth={1.5} size={16} />
           <span className="text-xs leading-4 text-gray-700">Publish</span>
         </Button>
       </div>

@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/db/db";
 
-import WeeklyCalendar from "../dashboard/components/weekly-calendar";
+import WeeklyCalendar from "./components/weekly-calendar";
 
-const DashboardPage = async () => {
+const RotaPage = async () => {
   const { isAuthenticated, getUser } = getKindeServerSession();
 
   const isLoggedIn = await isAuthenticated();
@@ -32,4 +32,4 @@ const DashboardPage = async () => {
   );
 };
 
-export default DashboardPage;
+export default RotaPage;

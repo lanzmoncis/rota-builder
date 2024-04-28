@@ -23,7 +23,7 @@ const Header = () => {
   const pathName = usePathname().substring(1);
 
   return (
-    <div className="bg-muted/40 py-2 pr-2 flex justify-between">
+    <div className="py-2 pr-2 flex justify-between">
       <div className="bg-white w-5/6 text-center rounded-sm shadow-sm flex justify-center items-center gap-2">
         {routes.map(
           (route, index) =>
