@@ -1,7 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
-import Sidebar from "@/components/navigation/sidebar";
+import Sidebar from "@/components/ui/sidebar";
 import Header from "@/components/ui/header";
 import { Toaster } from "@/components/ui/toaster";
 

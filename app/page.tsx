@@ -1,12 +1,14 @@
 "use client";
 
+import Image from "next/image";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
+
 import { Button } from "@/components/ui/button";
 
 import NextLogo from "../public/next.svg";
 import VercelLogo from "../public/vercel.svg";
 import TailwindLogo from "../public/tailwindcss-logotype.svg";
 import PrismaLogo from "../public/Prisma-DarkLogo.svg";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -23,8 +25,8 @@ export default function Home() {
           effortless to create and manage schedules efficiently, so you can
           focus on what matters most.
         </p>
-        <Button size={"lg"} className="text-md">
-          Login
+        <Button size={"lg"} className="text-sm px-6 font-semibold">
+          <LoginLink>Try shifty for free</LoginLink>
         </Button>
       </div>
       <div className="pb-8 absolute bottom-0">

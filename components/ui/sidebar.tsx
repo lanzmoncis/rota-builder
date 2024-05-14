@@ -1,4 +1,4 @@
-import MainNav from "@/components/navigation/main-nav";
+import MainNav from "@/components/ui/main-nav";
 import Logo from "@/components/ui/logo";
 
 const Sidebar = () => {
