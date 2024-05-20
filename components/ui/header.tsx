@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { getInitials } from "@/lib/get-initials";
+
 import { routes } from "@/constants/routes";
 
 const Header = () => {
@@ -23,8 +25,8 @@ const Header = () => {
   const pathName = usePathname().substring(1);
 
   return (
-    <div className="py-2 pr-2 flex justify-between">
-      <div className="bg-white w-5/6 text-center rounded-sm shadow-sm flex justify-center items-center gap-2">
+    <div className="py-2 pr-2 flex justify-between items-center">
+      <div className="bg-white w-5/6 text-center rounded-sm shadow-sm flex justify-center items-center gap-2 p-1">
         {routes.map(
           (route, index) =>
             pathName.startsWith(route.href.substring(1)) && (
@@ -45,7 +47,7 @@ const Header = () => {
       {user && (
         <DropdownMenu>
           <DropdownMenuTrigger>
-            {user?.picture && (
+            {user?.picture ? (
               <Image
                 src={user?.picture}
                 alt="Profile picture"
@@ -53,6 +55,10 @@ const Header = () => {
                 height={50}
                 className="rounded-full w-7 h-7"
               />
+            ) : (
+              <div className="rounded-full w-7 h-7 bg-green-400 flex items-center justify-center">
+                {getInitials(user?.given_name)}
+              </div>
             )}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

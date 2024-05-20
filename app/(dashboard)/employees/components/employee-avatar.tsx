@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { getInitials } from "@/lib/get-initials";
 
 interface EmployeeAvatarProps {
   imageUrl: string;
@@ -11,13 +12,6 @@ export const EmployeeAvatar: React.FC<EmployeeAvatarProps> = ({
   imageUrl,
   name,
 }) => {
-  const getInitials = (name: string) => {
-    const names = name.split(" ");
-    const firstName = names[0].charAt(0).toUpperCase();
-    const lastName = names[names.length - 1].charAt(0).toUpperCase();
-    return `${firstName}${lastName}`;
-  };
-
   return (
     <div className=" w-4">
       <Avatar>
