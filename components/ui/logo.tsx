@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Ban } from "lucide-react";
 import React from "react";
 
 const Logo: React.FC = () => {

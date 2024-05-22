@@ -17,7 +17,7 @@ export default function Home() {
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-green-200 opacity-20 blur-[100px]"></div>
       </div>
       <div className="h-screen w-full flex flex-col justify-center items-center">
-        <div className="max-w-2xl flex flex-col items-center justify-center text-center px-12 grow">
+        <div className="w-1/2 flex flex-col items-center justify-center text-center px-12 grow">
           <h1 className="text-9xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-green-600">
             Shifty
           </h1>
