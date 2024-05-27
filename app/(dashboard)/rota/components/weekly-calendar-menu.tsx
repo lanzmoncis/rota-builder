@@ -63,7 +63,7 @@ export const WeeklyCalendarMenu: React.FC<WeeklyCalendarMenuProps> = ({
         >
           <ChevronRight strokeWidth={1.25} size={24} />
         </Button>
-        <Button variant="outline" className="h-[30px] px-2">
+        <Button variant="outline" className="h-[30px] px-2 cursor-not-allowed">
           <Send className="mr-1" strokeWidth={1.5} size={16} />
           <span className="text-xs leading-4 text-gray-700">Publish</span>
         </Button>

@@ -9,7 +9,7 @@ const Logo: React.FC = () => {
       <span className="font-bold text-xl text-gray-700 tracking-tight">
         Shifty
       </span>
-      <div>
+      <div className="cursor-not-allowed">
         <MoreHorizontal size={20} strokeWidth={1.5} color={"#64748b"} />
       </div>
     </div>
