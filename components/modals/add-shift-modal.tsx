@@ -146,7 +146,7 @@ export const AddShiftModal: React.FC<AddShiftModalProps> = ({
             <Button
               disabled={loading}
               type="submit"
-              className="bg-green-500 text-[13.5px] leading-4"
+              className="text-[13.5px] leading-4"
             >
               {actions}
             </Button>

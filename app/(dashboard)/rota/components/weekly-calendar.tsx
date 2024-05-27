@@ -76,7 +76,7 @@ const WeeklyCalendar: React.FC<WeeklyCalendarProps> = ({ employees }) => {
               <p>No employees available.</p>
               <Button
                 size={"sm"}
-                className="text-[13px] bg-green-500"
+                className="text-[13px]"
                 onClick={() => router.push(`/employees/new`)}
               >
                 Add employee

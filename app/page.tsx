@@ -26,7 +26,7 @@ export default function Home() {
             effortless to create and manage schedules efficiently, so you can
             focus on what matters most.
           </p>
-          <Button size={"lg"} className="text-sm px-6 font-semibold">
+          <Button size={"lg"} className="text-sm px-6 font-semibold" asChild>
             <LoginLink>Try shifty for free</LoginLink>
           </Button>
         </div>

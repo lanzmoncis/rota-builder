@@ -22,7 +22,7 @@ export const EmployeesClient: React.FC<EmployeeClientProps> = ({ data }) => {
       <div className="flex justify-between items-center">
         <Heading title="Employees" />
         <Button
-          className="bg-green-500 text-[13.5px] leading-4"
+          className="text-[13.5px] leading-4"
           size="sm"
           onClick={() => router.push(`/employees/new`)}
         >
