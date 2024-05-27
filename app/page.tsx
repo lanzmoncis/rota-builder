@@ -21,7 +21,7 @@ export default function Home() {
           <h1 className="text-8xl md:text-9xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-green-600">
             Shifty
           </h1>
-          <p className="mt-6 text-xs/loose md:text-sm/loose font-medium text-pretty text-gray-600 mb-6">
+          <p className="mt-6 text-xs/loose md:text-sm/loose font-medium text-pretty text-gray-500 mb-6">
             Building rotas should be fast and simple. Our platform makes it
             effortless to create and manage schedules efficiently, so you can
             focus on what matters most.
