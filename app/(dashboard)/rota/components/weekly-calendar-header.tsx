@@ -24,7 +24,7 @@ export const WeeklyCalendarHeader: React.FC<WeeklyCalendarHeaderProps> = ({
         key={i}
         className={cn(
           "text-[12.5px] leading-4 w-full h-full flex items-center justify-center",
-          isSameDay(currentDate, new Date()) && "bg-green-100"
+          isSameDay(currentDate, new Date()) && "bg-green-200"
         )}
       >
         {format(currentDate, dateFormatNoYear)}

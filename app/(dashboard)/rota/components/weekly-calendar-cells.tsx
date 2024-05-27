@@ -106,7 +106,7 @@ export const WeeklyCalendarCells: React.FC<WeeklyCalendarCellProps> = ({
             <div
               className={cn(
                 "flex justify-end px-6 items-center border-r border-b  border-slate-300 text-[13px] leading-4",
-                index % 2 === 0 ? "bg-green-300" : "bg-green-200"
+                index % 2 === 0 ? "bg-green-400" : "bg-green-300"
               )}
             >
               {employee.name}
