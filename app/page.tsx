@@ -14,14 +14,15 @@ export default function Home() {
   return (
     <>
       <div className="absolute inset-0 -z-10 h-screen w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-green-200 opacity-20 blur-[100px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-green-300 opacity-20 blur-[100px]"></div>
       </div>
+
       <div className="h-screen w-full flex flex-col justify-center items-center">
         <div className="md:max-w-2xl flex flex-col items-center justify-center text-center px-12 grow">
-          <h1 className="text-8xl md:text-9xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-green-600">
+          <h1 className="text-8xl md:text-9xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-green-300 via-green-400 to-green-600">
             Shifty
           </h1>
-          <p className="mt-6 text-xs/loose md:text-sm/loose font-medium text-pretty text-gray-500 mb-6">
+          <p className="mt-6 text-xs/loose md:text-sm/loose font-medium text-pretty text-gray-500/70 mb-6">
             Building rotas should be fast and simple. Our platform makes it
             effortless to create and manage schedules efficiently, so you can
             focus on what matters most.

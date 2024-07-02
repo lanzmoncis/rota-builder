@@ -21,28 +21,28 @@ enum timeOff {
 }
 
 model Employee {
-  id          String    @id @default(cuid())
-  userId      String
-  name        String
-  email       String    @unique
-  jobTitle    String
-  dateStarted DateTime
-  payrollId   String
-  hourlyRate  String
-  imageUrl    String
-  shifts      Shift[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  userId          String
+  name            String
+  email           String    @unique
+  jobTitle        String
+  dateStarted     DateTime
+  payrollId       String
+  hourlyRate      String
+  imageUrl        String
+  shifts          Shift[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Shift {
-  id          String    @id @default(cuid())
-  employeeId  String
-  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  date        DateTime
-  department  String
-  shiftTime   String
-  timeOff     timeOff?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  employeeId      String
+  employee        Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date            DateTime
+  department      String
+  shiftTime       String
+  timeOff         timeOff?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
