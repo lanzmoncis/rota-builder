@@ -19,7 +19,7 @@ export default function Home() {
 
       <div className="h-screen w-full flex flex-col justify-center items-center">
         <div className="md:max-w-2xl flex flex-col items-center justify-center text-center px-12 grow">
-          <h1 className="text-8xl md:text-9xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-green-300 via-green-400 to-green-600">
+          <h1 className="text-8xl md:text-9xl font-medium text-transparent bg-clip-text bg-gradient-to-br from-green-300 via-green-400 to-green-600">
             Shifty
           </h1>
           <p className="mt-6 text-xs/loose md:text-sm/loose font-medium text-pretty text-gray-500/70 mb-6">
