@@ -13,7 +13,7 @@ import ShiftyLogo from "../public/logo-base-256x256.png";
 
 export default function Home() {
   return (
-    <div className="px-4 md:px-10 lg:px-36 py-11 flex flex-col md:items-center h-[100dvh] overflow-hidden">
+    <div className="absolute px-4 md:px-10 lg:px-36 py-11 flex flex-col md:justify-center md:items-center h-full overflow-hidden w-full">
       <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#1AB366_100%)]"></div>
       <div className="mx-auto flex w-full justify-between">
         <div className="flex gap-2 items-center">
