@@ -10,6 +10,7 @@ export type EmployeeColumn = {
   id: string;
   name: string;
   jobTitle: string;
+  email: string;
   payrollId: string;
   hourlyRate: string;
   imageUrl: string;
